@@ -7,7 +7,9 @@
 	--wx-gantt-icon-color: #9fa1ae;
 
 	/* bars */
-	--wx-gantt-bar-font: var(--wx-font-weight) var(--wx-font-size)
+	--wx-gantt-bar-font: 
+		var(--wx-font-weight) 
+		var(--wx-font-size)
 		var(--wx-font-family);
 	--wx-gantt-bar-border-radius: 3px;
 	--wx-gantt-milestone-border-radius: 3px;
@@ -35,25 +37,31 @@
 		0px 3px 10px rgba(44, 47, 60, 0.12);
 
 	--wx-gantt-progress-marker-height: 26px;
-	--wx-gantt-progress-border-color: #c0c3ce;
+	--wx-gantt-progress-border-color: #181818;
 
 	--wx-gantt-baseline-border-radius: 2px;
 
 	/* grid */
-	--wx-grid-header-font: var(--wx-font-weight-md) var(--wx-font-size)
+	--wx-grid-header-font: 
+		var(--wx-font-weight-md) 
+		var(--wx-font-size)
 		var(--wx-font-family);
 	--wx-grid-header-font-color: var(--wx-color-font);
 	--wx-grid-header-text-transform: capitalize;
 	--wx-grid-header-shadow: none;
 
-	--wx-grid-body-font: var(--wx-font-weight) var(--wx-font-size)
+	--wx-grid-body-font: 
+		var(--wx-font-weight) 
+		var(--wx-font-size)
 		var(--wx-font-family);
 	--wx-grid-body-font-color: var(--wx-color-font);
 	--wx-grid-body-row-border: var(--wx-gantt-taskscale-border);
 	--wx-grid-body-cell-border: 1px solid transparent;
 
 	/* timescale */
-	--wx-timescale-font: var(--wx-font-weight-md) var(--wx-font-size-sm)
+	--wx-timescale-font: 
+		var(--wx-font-weight-md) 
+		var(--wx-font-size-sm)
 		var(--wx-font-family);
 	--wx-timescale-font-color: var(--wx-color-font);
 	--wx-timescale-text-transform: uppercase;
@@ -61,7 +69,7 @@
 	--wx-timescale-border: var(--wx-gantt-taskscale-border);
 
 	/* grid and timescale */
-	--wx-gantt-holiday-background: #f0f6fa;
+	--wx-gantt-holiday-background: #ffa5a5;
 	--wx-gantt-holiday-color: #9fa1ae;
 
 	/* markers */
