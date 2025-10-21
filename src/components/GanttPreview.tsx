@@ -6,9 +6,29 @@ import "wx-react-gantt/dist/gantt.css";
 import { getDemoSchedule } from "../data/demoSchedule";
 
 const START_COLUMN_WIDTH = 100;
-const DAY_SCALE_WIDTH = 10;
-const WEEK_SCALE_WIDTH = 80;
-const MONTH_SCALE_WIDTH = 120;
+
+// cellWidth 맵핑: 각 뷰별 기본 셀 너비
+const CELL_WIDTH_MAP: Record<ViewType, number> = {
+    day: 38,      // px
+    week: 120,    // px
+    month: 180,  // px
+};
+
+// cellHeight: 셀의 높이 (행 높이)
+const CELL_HEIGHT = 36;  // px
+
+// 마일스톤 등 작업 타입 정의
+const TASK_TYPES = [
+    { id: "task", label: "Task" },
+    { id: "summary", label: "Summary task" },
+    { id: "milestone", label: "Milestone" },
+];
+
+// 작업 타입별 색상 정의
+const WORK_TYPE_COLORS: Record<string, string> = {
+    direct: "#4CAF50",      // 녹색 - 직접작업
+    indirect: "#2196F3",    // 파란색 - 간접작업
+};
 
 type ViewType = "day" | "week" | "month";
 
@@ -16,52 +36,57 @@ interface ScaleConfig {
     unit: "year" | "month" | "day" | "hour" | "week";
     step: number;
     format: string;
-    cellWidth?: number;
+    [key: string]: unknown;
 }
 
 interface TimeScaleConfig {
-    scaleWidth: number;
-    scales: Array<Omit<ScaleConfig, "cellWidth">>;
+    scales: Array<ScaleConfig>;
 }
 
 const TIME_SCALE_CONFIGS: Record<ViewType, TimeScaleConfig> = {
     day: {
-        scaleWidth: DAY_SCALE_WIDTH,
         scales: [
-            { unit: "month", step: 1, format: "yyyy년 M월" },
+            { unit: "year", step: 1, format: "yyyy년" },
+            { unit: "month", step: 1, format: "M월" },
             { unit: "day", step: 1, format: "d일" },
         ],
     },
     week: {
-        scaleWidth: WEEK_SCALE_WIDTH,
         scales: [
-            { unit: "month", step: 1, format: "yyyy년 M월" },
+            { unit: "year", step: 1, format: "yyyy년" },
+            { unit: "month", step: 1, format: "M월" },
             { unit: "week", step: 1, format: "w주" },
         ],
     },
     month: {
-        scaleWidth: MONTH_SCALE_WIDTH,
         scales: [
-            { unit: "month", step: 1, format: "yyyy년 M월" },
+            { unit: "year", step: 1, format: "yyyy년" },
+            { unit: "month", step: 1, format: "M월" },
         ],
     },
 };
 
 export const GanttPreview: React.FC = () => {
-    const [viewType, setViewType] = useState<ViewType>("week");
+    const [viewType, setViewType] = useState<ViewType>("day");
 
     const schedule = useMemo(() => {
         const data = getDemoSchedule();
-        // 마일스톤 처리: duration을 0으로 설정하여 다이아몬드로 표시
+        // 마일스톤 처리 및 workType에 따른 색상 지정
         const processedTasks = data.tasks.map((task) => {
+            const updatedTask = { ...task };
+
+            // 마일스톤 처리: duration을 0으로 설정하여 다이아몬드로 표시
             if (task.type === "milestone") {
-                return {
-                    ...task,
-                    duration: 0,
-                    progress: 100,
-                };
+                updatedTask.duration = 0;
+                updatedTask.progress = 100;
             }
-            return task;
+
+            // workType에 따른 색상 지정 (직접작업/간접작업 구분)
+            if (task.workType && WORK_TYPE_COLORS[task.workType as string]) {
+                updatedTask.color = WORK_TYPE_COLORS[task.workType as string];
+            }
+
+            return updatedTask;
         });
         return {
             ...data,
@@ -76,7 +101,12 @@ export const GanttPreview: React.FC = () => {
             }
 
             if (column.id === "start") {
-                return { ...column, header: "시작", width: START_COLUMN_WIDTH };
+                return {
+                    ...column,
+                    header: "시작",
+                    width: START_COLUMN_WIDTH,
+                    format: "yyyy-MM-dd"  // 날짜 형식: yyyy-MM-dd (년-월-일)
+                };
             }
 
             if (column.id === "duration") {
@@ -93,21 +123,15 @@ export const GanttPreview: React.FC = () => {
 
     const scales = useMemo(() => {
         const config = TIME_SCALE_CONFIGS[viewType];
-        return config.scales.map((scale) => ({
-            ...scale,
-            cellWidth: config.scaleWidth,
-        }));
+        return config.scales;
     }, [viewType]);
 
     return (
         <section>
             <header>
                 <h2>공동주택 골조공사 표준공정</h2>
-                <p>지하골조(벽체+슬라브)</p>
             </header>
-
             <div className="mb-5 p-4 bg-gray-100 rounded">
-                <label className="mr-3 font-bold">보기 모드:</label>
                 <button
                     onClick={() => handleViewTypeChange("day")}
                     className={`px-4 py-2 mr-2 rounded border-none cursor-pointer ${
@@ -139,7 +163,6 @@ export const GanttPreview: React.FC = () => {
                     월 단위
                 </button>
             </div>
-
             <div className="gantt-wrapper" role="figure" aria-label="Project Gantt chart">
                 <Willow>
                     <Gantt
@@ -147,6 +170,9 @@ export const GanttPreview: React.FC = () => {
                         links={schedule.links}
                         scales={scales}
                         columns={columns}
+                        taskTypes={TASK_TYPES}
+                        cellWidth={CELL_WIDTH_MAP[viewType]}
+                        cellHeight={CELL_HEIGHT}
                     />
                 </Willow>
             </div>

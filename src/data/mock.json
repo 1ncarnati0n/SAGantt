@@ -9,7 +9,8 @@
             "progress": 0,
             "type": "summary",
             "lazy": false,
-            "category": "주공정"
+            "category": "주공정",
+            "open": true
         },
         {
             "id": 99,
@@ -30,7 +31,8 @@
             "progress": 0,
             "type": "summary",
             "parent": 1,
-            "category": "지하골조"
+            "category": "지하골조",
+            "open": true
         },
         {
             "id": 101,
@@ -142,7 +144,8 @@
             "progress": 0,
             "type": "summary",
             "parent": 1,
-            "category": "지하골조"
+            "category": "지하골조",
+            "open": true
         },
         {
             "id": 201,
@@ -215,7 +218,8 @@
             "progress": 0,
             "type": "summary",
             "parent": 1,
-            "category": "지상골조"
+            "category": "지상골조",
+            "open": true
         },
         {
             "id": 301,
@@ -314,7 +318,8 @@
             "progress": 0,
             "type": "summary",
             "parent": 1,
-            "category": "지상골조"
+            "category": "지상골조",
+            "open": true
         },
         {
             "id": 401,

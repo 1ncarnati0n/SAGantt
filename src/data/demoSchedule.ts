@@ -16,6 +16,8 @@ export interface DemoTask {
     category?: string;
     workType?: WorkType;
     color?: string;
+    open?: boolean;
+    [key: string]: unknown;
 }
 
 export interface DemoLink {
@@ -23,6 +25,7 @@ export interface DemoLink {
     source: number;
     target: number;
     type: "e2e" | "s2s" | "e2s" | "s2e";
+    [key: string]: unknown;
 }
 
 export interface DemoScale {
@@ -50,6 +53,7 @@ interface MockTask {
     category?: string;
     workType?: WorkType;
     color?: string;
+    open?: boolean;
 }
 
 interface MockLink {

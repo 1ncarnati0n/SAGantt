@@ -17,9 +17,15 @@
 
 ## 의존성
 - 관리: 런타임은 `requirements.txt`
+- React 버전은 18 (SVAR 라이브러리가 아직 19 미지원)
+- TypeScript 
+- SVAR은 wx-raact-gannt 라이브러리
+- Vit 빌드 구조
+- 스타일은 Tailwinds 사용, globals.css 에 전역스타일 사용 
 
 ## 프로젝트 성격
 - 건축공정관리 간트차트 시스템
 - SVAR react 라이브러리를 사용
 - SVAR 관련 문서는 GuideSVAR 안의 markdown 파일들을 참고하여 구현
-- 
+
+
