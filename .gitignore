@@ -7,18 +7,78 @@ yarn-error.log*
 pnpm-debug.log*
 lerna-debug.log*
 
-node_modules
+# Environment variables
+.env
+.env.*
+!.env.example
+*.local
+
+# Dependency directories
+node_modules/
+
+# Build output
 dist
 dist-ssr
-*.local
+build
+out/
 
 # Editor directories and files
 .vscode/*
 !.vscode/extensions.json
 .idea
-.DS_Store
 *.suo
 *.ntvs*
 *.njsproj
 *.sln
 *.sw?
+*.iml
+.fleet
+
+# Tooling caches
+.eslintcache
+.stylelintcache
+.parcel-cache
+.turbo
+.vercel
+.pnp.*
+coverage/
+coverage-*/
+*.lcov
+.nyc_output/
+.vite/
+tmp/
+
+# macOS
+.DS_Store
+**/.DS_Store
+.AppleDouble
+.LSOverride
+._*
+
+# Windows
+Thumbs.db
+Thumbs.db:Zone.Identifier
+ehthumbs.db
+Desktop.ini
+$RECYCLE.BIN/
+*.stackdump
+
+# Linux / WSL
+*~
+.direnv/
+.cache/
+
+# Misc
+*.tgz
+*.zip
+*.tar
+*.tar.gz
+.npm/
+.pnpm-store/
+.yarn/*
+!.yarn/cache
+!.yarn/patches
+!.yarn/releases
+!.yarn/plugins
+!.yarn/sdks
+!.yarn/versions
