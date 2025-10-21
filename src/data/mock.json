@@ -349,7 +349,7 @@
         },
         {
             "id": 400,
-            "text": "지상골조 (일반,마감 층)",
+            "text": "지상골조(일반,마감 층)",
             "start": "2025-07-02",
             "end": "2025-07-12",
             "duration": 8,
@@ -465,173 +465,35 @@
         }
     ],
     "links": [
-        {
-            "id": 1,
-            "source": 101,
-            "target": 102,
-            "type": "e2s"
-        },
-        {
-            "id": 2,
-            "source": 102,
-            "target": 103,
-            "type": "e2s"
-        },
-        {
-            "id": 3,
-            "source": 103,
-            "target": 104,
-            "type": "e2s"
-        },
-        {
-            "id": 4,
-            "source": 104,
-            "target": 105,
-            "type": "e2s"
-        },
-        {
-            "id": 5,
-            "source": 105,
-            "target": 106,
-            "type": "e2s"
-        },
-        {
-            "id": 6,
-            "source": 106,
-            "target": 107,
-            "type": "e2s"
-        },
-        {
-            "id": 7,
-            "source": 107,
-            "target": 190,
-            "type": "e2s"
-        },
-        {
-            "id": 8,
-            "source": 190,
-            "target": 201,
-            "type": "e2s"
-        },
-        {
-            "id": 9,
-            "source": 201,
-            "target": 202,
-            "type": "s2s"
-        },
-        {
-            "id": 10,
-            "source": 202,
-            "target": 203,
-            "type": "e2s"
-        },
-        {
-            "id": 11,
-            "source": 203,
-            "target": 204,
-            "type": "e2s"
-        },
-        {
-            "id": 12,
-            "source": 204,
-            "target": 290,
-            "type": "e2e"
-        },
-        {
-            "id": 13,
-            "source": 290,
-            "target": 301,
-            "type": "e2s"
-        },
-        {
-            "id": 14,
-            "source": 301,
-            "target": 302,
-            "type": "s2s"
-        },
-        {
-            "id": 15,
-            "source": 302,
-            "target": 303,
-            "type": "s2s"
-        },
-        {
-            "id": 16,
-            "source": 303,
-            "target": 304,
-            "type": "s2s"
-        },
-        {
-            "id": 17,
-            "source": 304,
-            "target": 305,
-            "type": "e2s"
-        },
-        {
-            "id": 18,
-            "source": 305,
-            "target": 306,
-            "type": "e2s"
-        },
-        {
-            "id": 19,
-            "source": 306,
-            "target": 299,
-            "type": "e2e"
-        },
-        {
-            "id": 20,
-            "source": 299,
-            "target": 401,
-            "type": "e2s"
-        },
-        {
-            "id": 21,
-            "source": 401,
-            "target": 402,
-            "type": "s2s"
-        },
-        {
-            "id": 22,
-            "source": 402,
-            "target": 403,
-            "type": "s2s"
-        },
-        {
-            "id": 23,
-            "source": 403,
-            "target": 404,
-            "type": "s2s"
-        },
-        {
-            "id": 24,
-            "source": 404,
-            "target": 405,
-            "type": "e2s"
-        },
-        {
-            "id": 25,
-            "source": 405,
-            "target": 406,
-            "type": "e2s"
-        },
-        {
-            "id": 26,
-            "source": 406,
-            "target": 490,
-            "type": "e2s"
-        }
+        {"id":1,"source":101,"target":102,"type":"e2s"},
+        {"id":2,"source":102,"target":103,"type":"e2s"},
+        {"id":3,"source":103,"target":104,"type":"e2s"},
+        {"id":4,"source":104,"target":105,"type":"e2s"},
+        {"id":5,"source":105,"target":106,"type":"e2s"},
+        {"id":6,"source":106,"target":107,"type":"e2s"},
+        {"id":7,"source":107,"target":190,"type":"e2s"},
+        {"id":8,"source":190,"target":200,"type":"e2s"},
+        {"id":9,"source":201,"target":202,"type":"e2s"},
+        {"id":10,"source":202,"target":203,"type":"e2s"},
+        {"id":11,"source":203,"target":204,"type":"e2s"},
+        {"id":12,"source":204,"target":290,"type":"e2s"},
+        {"id":13,"source":290,"target":300,"type":"e2s"},
+        {"id":14,"source":301,"target":302,"type":"s2s"},
+        {"id":15,"source":302,"target":303,"type":"s2s"},
+        {"id":16,"source":303,"target":304,"type":"s2s"},
+        {"id":17,"source":304,"target":305,"type":"e2s"},
+        {"id":18,"source":305,"target":306,"type":"e2s"},
+        {"id":19,"source":306,"target":390,"type":"e2s"},
+        {"id":20,"source":390,"target":400,"type":"e2s"},
+        {"id":21,"source":401,"target":402,"type":"s2s"},
+        {"id":22,"source":402,"target":403,"type":"s2s"},
+        {"id":23,"source":403,"target":404,"type":"s2s"},
+        {"id":24,"source":404,"target":405,"type":"e2s"},
+        {"id":25,"source":405,"target":406,"type":"e2s"},
+        {"id":26,"source":406,"target":490,"type":"e2s"}
     ],
     "scales": [
-        {
-            "unit": "month",
-            "step": 1,
-            "format": "yyyy년 M월"
-        },
-        {
-            "unit": "day",
-            "step": 1,
-            "format": "d일"
-        }
+        {"unit":"month","step":1,"format":"yyyy년 M월"},
+        {"unit":"day","step":1,"format":"d일"}
     ]
 }
