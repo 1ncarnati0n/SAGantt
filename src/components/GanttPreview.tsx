@@ -140,7 +140,7 @@ export const GanttPreview: React.FC = () => {
                             : "bg-gray-300 text-black font-normal"
                     }`}
                 >
-                    일 단위
+                    일
                 </button>
                 <button
                     onClick={() => handleViewTypeChange("week")}
@@ -150,7 +150,7 @@ export const GanttPreview: React.FC = () => {
                             : "bg-gray-300 text-black font-normal"
                     }`}
                 >
-                    주 단위
+                    주
                 </button>
                 <button
                     onClick={() => handleViewTypeChange("month")}
@@ -160,7 +160,7 @@ export const GanttPreview: React.FC = () => {
                             : "bg-gray-300 text-black font-normal"
                     }`}
                 >
-                    월 단위
+                    월
                 </button>
             </div>
             <div className="gantt-wrapper" role="figure" aria-label="Project Gantt chart">
