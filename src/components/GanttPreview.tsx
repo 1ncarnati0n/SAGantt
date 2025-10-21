@@ -1,7 +1,7 @@
 import React, { useMemo, useState } from "react";
 
 import { Gantt, Willow, defaultColumns } from "wx-react-gantt";
-import "wx-react-gantt/dist/gantt.css";
+import "../styles/ganttTheme.css";
 
 import { getDemoSchedule } from "../data/demoSchedule";
 
@@ -9,7 +9,7 @@ const START_COLUMN_WIDTH = 100;
 
 // cellWidth 맵핑: 각 뷰별 기본 셀 너비
 const CELL_WIDTH_MAP: Record<ViewType, number> = {
-    day: 38,      // px
+    day: 30,      // px
     week: 120,    // px
     month: 180,  // px
 };
@@ -48,7 +48,7 @@ const TIME_SCALE_CONFIGS: Record<ViewType, TimeScaleConfig> = {
         scales: [
             { unit: "year", step: 1, format: "yyyy년" },
             { unit: "month", step: 1, format: "M월" },
-            { unit: "day", step: 1, format: "d일" },
+            { unit: "day", step: 1, format: "d" },
         ],
     },
     week: {
@@ -68,6 +68,7 @@ const TIME_SCALE_CONFIGS: Record<ViewType, TimeScaleConfig> = {
 
 export const GanttPreview: React.FC = () => {
     const [viewType, setViewType] = useState<ViewType>("day");
+    const [showBaselines, setShowBaselines] = useState<boolean>(true);
 
     const schedule = useMemo(() => {
         const data = getDemoSchedule();
@@ -156,6 +157,17 @@ export const GanttPreview: React.FC = () => {
                 >
                     월
                 </button>
+                <button
+                    onClick={() => setShowBaselines((prev) => !prev)}
+                    className={`px-4 py-2 rounded border-none cursor-pointer ${
+                        showBaselines
+                            ? "bg-purple-500 text-white font-bold"
+                            : "bg-gray-300 text-black font-normal"
+                    }`}
+                    aria-pressed={showBaselines}
+                >
+                    기준 일정 {showBaselines ? "숨기기" : "표시"}
+                </button>
             </div>
             <div className="gantt-wrapper" role="figure" aria-label="Project Gantt chart">
                 <Willow>
@@ -167,7 +179,7 @@ export const GanttPreview: React.FC = () => {
                         taskTypes={TASK_TYPES}
                         cellWidth={CELL_WIDTH_MAP[viewType]}
                         cellHeight={CELL_HEIGHT}
-                        baselines={true}
+                        baselines={showBaselines}
                     />
                 </Willow>
             </div>

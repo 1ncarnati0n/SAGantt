@@ -11,8 +11,8 @@
             "lazy": false,
             "category": "주공정",
             "open": true,
-            "base_start": "2025-05-05",
-            "base_end": "2025-07-12"
+            "base_start": "2025-05-03",
+            "base_end": "2025-07-14"
         },
         {
             "id": 100,
@@ -25,8 +25,8 @@
             "parent": 1,
             "category": "지하골조",
             "open": true,
-            "base_start": "2025-05-05",
-            "base_end": "2025-05-24"
+            "base_start": "2025-05-03",
+            "base_end": "2025-05-26"
         },
         {
             "id": 101,
@@ -39,9 +39,7 @@
             "parent": 100,
             "lazy": false,
             "category": "벽체",
-            "workType": "direct",
-            "base_start": "2025-05-04",
-            "base_end": "2025-05-08"
+            "workType": "direct"
         },
         {
             "id": 102,
@@ -54,9 +52,7 @@
             "parent": 100,
             "lazy": false,
             "category": "벽체",
-            "workType": "direct",
-            "base_start": "2025-05-06",
-            "base_end": "2025-05-13"
+            "workType": "direct"
         },
         {
             "id": 103,
@@ -69,9 +65,7 @@
             "parent": 100,
             "lazy": false,
             "category": "거푸집",
-            "workType": "indirect",
-            "base_start": "2025-05-10",
-            "base_end": "2025-05-13"
+            "workType": "indirect"
         },
         {
             "id": 104,
@@ -84,9 +78,7 @@
             "parent": 100,
             "lazy": false,
             "category": "거푸집",
-            "workType": "indirect",
-            "base_start": "2025-05-12",
-            "base_end": "2025-05-14"
+            "workType": "indirect"
         },
         {
             "id": 105,
@@ -99,9 +91,7 @@
             "parent": 100,
             "lazy": false,
             "category": "슬라브",
-            "workType": "direct",
-            "base_start": "2025-05-13",
-            "base_end": "2025-05-18"
+            "workType": "direct"
         },
         {
             "id": 106,
@@ -114,9 +104,7 @@
             "parent": 100,
             "lazy": false,
             "category": "타설",
-            "workType": "direct",
-            "base_start": "2025-05-16",
-            "base_end": "2025-05-19"
+            "workType": "direct"
         },
         {
             "id": 107,
@@ -129,9 +117,7 @@
             "parent": 100,
             "lazy": false,
             "category": "양생",
-            "workType": "indirect",
-            "base_start": "2025-05-19",
-            "base_end": "2025-05-23"
+            "workType": "indirect"
         },
         {
             "id": 190,
@@ -141,9 +127,7 @@
             "duration": 0,
             "progress": 100,
             "type": "milestone",
-            "parent": 1,
-            "base_start": "2025-05-24",
-            "base_end": "2025-05-24"
+            "parent": 1
         },
         {
             "id": 200,
@@ -156,8 +140,8 @@
             "parent": 1,
             "category": "지하골조",
             "open": true,
-            "base_start": "2025-05-26",
-            "base_end": "2025-06-07"
+            "base_start": "2025-05-24",
+            "base_end": "2025-06-09"
         },
         {
             "id": 201,
@@ -170,9 +154,7 @@
             "parent": 200,
             "lazy": false,
             "category": "벽체",
-            "workType": "direct",
-            "base_start": "2025-05-25",
-            "base_end": "2025-05-29"
+            "workType": "direct"
         },
         {
             "id": 202,
@@ -185,9 +167,7 @@
             "parent": 200,
             "lazy": false,
             "category": "벽체",
-            "workType": "direct",
-            "base_start": "2025-05-27",
-            "base_end": "2025-06-03"
+            "workType": "direct"
         },
         {
             "id": 203,
@@ -200,9 +180,7 @@
             "parent": 200,
             "lazy": false,
             "category": "타설",
-            "workType": "direct",
-            "base_start": "2025-06-01",
-            "base_end": "2025-06-04"
+            "workType": "direct"
         },
         {
             "id": 204,
@@ -215,9 +193,7 @@
             "parent": 200,
             "lazy": false,
             "category": "양생",
-            "workType": "indirect",
-            "base_start": "2025-06-04",
-            "base_end": "2025-06-06"
+            "workType": "indirect"
         },
         {
             "id": 290,
@@ -227,9 +203,7 @@
             "duration": 0,
             "progress": 100,
             "type": "milestone",
-            "parent": 1,
-            "base_start": "2025-06-07",
-            "base_end": "2025-06-07"
+            "parent": 1
         },
         {
             "id": 300,
@@ -242,8 +216,8 @@
             "parent": 1,
             "category": "지상골조",
             "open": true,
-            "base_start": "2025-06-09",
-            "base_end": "2025-07-01"
+            "base_start": "2025-06-07",
+            "base_end": "2025-07-03"
         },
         {
             "id": 301,
@@ -256,9 +230,7 @@
             "parent": 300,
             "lazy": false,
             "category": "거푸집",
-            "workType": "indirect",
-            "base_start": "2025-06-08",
-            "base_end": "2025-06-20"
+            "workType": "indirect"
         },
         {
             "id": 302,
@@ -271,9 +243,7 @@
             "parent": 300,
             "lazy": false,
             "category": "벽체",
-            "workType": "direct",
-            "base_start": "2025-06-14",
-            "base_end": "2025-06-16"
+            "workType": "direct"
         },
         {
             "id": 303,
@@ -286,9 +256,7 @@
             "parent": 300,
             "lazy": false,
             "category": "거푸집",
-            "workType": "indirect",
-            "base_start": "2025-06-16",
-            "base_end": "2025-06-23"
+            "workType": "indirect"
         },
         {
             "id": 304,
@@ -301,9 +269,7 @@
             "parent": 300,
             "lazy": false,
             "category": "슬라브",
-            "workType": "direct",
-            "base_start": "2025-06-20",
-            "base_end": "2025-06-23"
+            "workType": "direct"
         },
         {
             "id": 305,
@@ -316,9 +282,7 @@
             "parent": 300,
             "lazy": false,
             "category": "타설",
-            "workType": "direct",
-            "base_start": "2025-06-23",
-            "base_end": "2025-06-26"
+            "workType": "direct"
         },
         {
             "id": 306,
@@ -331,9 +295,7 @@
             "parent": 300,
             "lazy": false,
             "category": "양생",
-            "workType": "indirect",
-            "base_start": "2025-06-26",
-            "base_end": "2025-06-30"
+            "workType": "indirect"
         },
         {
             "id": 390,
@@ -343,9 +305,7 @@
             "duration": 0,
             "progress": 100,
             "type": "milestone",
-            "parent": 1,
-            "base_start": "2025-07-01",
-            "base_end": "2025-07-01"
+            "parent": 1
         },
         {
             "id": 400,
@@ -358,8 +318,8 @@
             "parent": 1,
             "category": "지상골조",
             "open": true,
-            "base_start": "2025-07-02",
-            "base_end": "2025-07-12"
+            "base_start": "2025-06-30",
+            "base_end": "2025-07-14"
         },
         {
             "id": 401,
@@ -372,9 +332,7 @@
             "parent": 400,
             "lazy": false,
             "category": "거푸집",
-            "workType": "indirect",
-            "base_start": "2025-07-01",
-            "base_end": "2025-07-03"
+            "workType": "indirect"
         },
         {
             "id": 402,
@@ -387,9 +345,7 @@
             "parent": 400,
             "lazy": false,
             "category": "벽체",
-            "workType": "direct",
-            "base_start": "2025-07-02",
-            "base_end": "2025-07-04"
+            "workType": "direct"
         },
         {
             "id": 403,
@@ -402,9 +358,7 @@
             "parent": 400,
             "lazy": false,
             "category": "거푸집",
-            "workType": "indirect",
-            "base_start": "2025-07-03",
-            "base_end": "2025-07-06"
+            "workType": "indirect"
         },
         {
             "id": 404,
@@ -417,9 +371,7 @@
             "parent": 400,
             "lazy": false,
             "category": "슬라브",
-            "workType": "direct",
-            "base_start": "2025-07-05",
-            "base_end": "2025-07-07"
+            "workType": "direct"
         },
         {
             "id": 405,
@@ -432,9 +384,7 @@
             "parent": 400,
             "lazy": false,
             "category": "타설",
-            "workType": "direct",
-            "base_start": "2025-07-07",
-            "base_end": "2025-07-09"
+            "workType": "direct"
         },
         {
             "id": 406,
@@ -447,9 +397,7 @@
             "parent": 400,
             "lazy": false,
             "category": "양생",
-            "workType": "indirect",
-            "base_start": "2025-07-09",
-            "base_end": "2025-07-11"
+            "workType": "indirect"
         },
         {
             "id": 490,
@@ -459,9 +407,7 @@
             "duration": 0,
             "progress": 100,
             "type": "milestone",
-            "parent": 1,
-            "base_start": "2025-07-12",
-            "base_end": "2025-07-12"
+            "parent": 1
         }
     ],
     "links": [
@@ -493,7 +439,15 @@
         {"id":26,"source":406,"target":490,"type":"e2s"}
     ],
     "scales": [
-        {"unit":"month","step":1,"format":"yyyy년 M월"},
-        {"unit":"day","step":1,"format":"d일"}
+        {
+            "unit": "month",
+            "step": 1,
+            "format": "yyyy년 M월"
+        },
+        {
+            "unit": "day",
+            "step": 1,
+            "format": "d일"
+        }
     ]
 }
