@@ -10,17 +10,9 @@
             "type": "summary",
             "lazy": false,
             "category": "주공정",
-            "open": true
-        },
-        {
-            "id": 99,
-            "text": "지하골조(벽체+슬라브) 완료",
-            "start": "2025-05-24",
-            "end": "2025-05-24",
-            "duration": 0,
-            "progress": 100,
-            "type": "milestone",
-            "parent": 1
+            "open": true,
+            "base_start": "2025-05-05",
+            "base_end": "2025-07-12"
         },
         {
             "id": 100,
@@ -32,7 +24,9 @@
             "type": "summary",
             "parent": 1,
             "category": "지하골조",
-            "open": true
+            "open": true,
+            "base_start": "2025-05-05",
+            "base_end": "2025-05-24"
         },
         {
             "id": 101,
@@ -45,7 +39,9 @@
             "parent": 100,
             "lazy": false,
             "category": "벽체",
-            "workType": "direct"
+            "workType": "direct",
+            "base_start": "2025-05-04",
+            "base_end": "2025-05-08"
         },
         {
             "id": 102,
@@ -58,33 +54,39 @@
             "parent": 100,
             "lazy": false,
             "category": "벽체",
-            "workType": "direct"
+            "workType": "direct",
+            "base_start": "2025-05-06",
+            "base_end": "2025-05-13"
         },
         {
             "id": 103,
             "text": "강관동바리 설치 및 해체",
             "start": "2025-05-11",
             "end": "2025-05-14",
-            "duration": 4.0,
+            "duration": 4,
             "progress": 0,
             "type": "task",
             "parent": 100,
             "lazy": false,
             "category": "거푸집",
-            "workType": "indirect"
+            "workType": "indirect",
+            "base_start": "2025-05-10",
+            "base_end": "2025-05-13"
         },
         {
             "id": 104,
             "text": "합판거푸집 설치",
             "start": "2025-05-13",
             "end": "2025-05-15",
-            "duration": 3.0,
+            "duration": 3,
             "progress": 0,
             "type": "task",
             "parent": 100,
             "lazy": false,
             "category": "거푸집",
-            "workType": "indirect"
+            "workType": "indirect",
+            "base_start": "2025-05-12",
+            "base_end": "2025-05-14"
         },
         {
             "id": 105,
@@ -97,43 +99,51 @@
             "parent": 100,
             "lazy": false,
             "category": "슬라브",
-            "workType": "direct"
+            "workType": "direct",
+            "base_start": "2025-05-13",
+            "base_end": "2025-05-18"
         },
         {
             "id": 106,
             "text": "콘크리트 펌프차 타설",
             "start": "2025-05-17",
             "end": "2025-05-20",
-            "duration": 4.0,
+            "duration": 4,
             "progress": 0,
             "type": "task",
             "parent": 100,
             "lazy": false,
             "category": "타설",
-            "workType": "direct"
+            "workType": "direct",
+            "base_start": "2025-05-16",
+            "base_end": "2025-05-19"
         },
         {
             "id": 107,
             "text": "콘크리트 양생 및 최종 검측",
             "start": "2025-05-20",
             "end": "2025-05-24",
-            "duration": 4.0,
+            "duration": 4,
             "progress": 0,
             "type": "task",
             "parent": 100,
             "lazy": false,
             "category": "양생",
-            "workType": "indirect"
+            "workType": "indirect",
+            "base_start": "2025-05-19",
+            "base_end": "2025-05-23"
         },
         {
-            "id": 199,
-            "text": "지하골조(벽체1단) 완료",
-            "start": "2025-06-07",
-            "end": "2025-06-07",
+            "id": 190,
+            "text": "지하골조(벽체+슬라브) 완료",
+            "start": "2025-05-24",
+            "end": "2025-05-24",
             "duration": 0,
             "progress": 100,
             "type": "milestone",
-            "parent": 1
+            "parent": 1,
+            "base_start": "2025-05-24",
+            "base_end": "2025-05-24"
         },
         {
             "id": 200,
@@ -145,7 +155,9 @@
             "type": "summary",
             "parent": 1,
             "category": "지하골조",
-            "open": true
+            "open": true,
+            "base_start": "2025-05-26",
+            "base_end": "2025-06-07"
         },
         {
             "id": 201,
@@ -158,7 +170,9 @@
             "parent": 200,
             "lazy": false,
             "category": "벽체",
-            "workType": "direct"
+            "workType": "direct",
+            "base_start": "2025-05-25",
+            "base_end": "2025-05-29"
         },
         {
             "id": 202,
@@ -171,43 +185,51 @@
             "parent": 200,
             "lazy": false,
             "category": "벽체",
-            "workType": "direct"
+            "workType": "direct",
+            "base_start": "2025-05-27",
+            "base_end": "2025-06-03"
         },
         {
             "id": 203,
             "text": "벽체1단 콘크리트 펌프차 타설",
             "start": "2025-06-02",
             "end": "2025-06-05",
-            "duration": 4.0,
+            "duration": 4,
             "progress": 0,
             "type": "task",
             "parent": 200,
             "lazy": false,
             "category": "타설",
-            "workType": "direct"
+            "workType": "direct",
+            "base_start": "2025-06-01",
+            "base_end": "2025-06-04"
         },
         {
             "id": 204,
             "text": "벽체1단 양생 및 검측",
             "start": "2025-06-05",
             "end": "2025-06-07",
-            "duration": 2.0,
+            "duration": 2,
             "progress": 0,
             "type": "task",
             "parent": 200,
             "lazy": false,
             "category": "양생",
-            "workType": "indirect"
+            "workType": "indirect",
+            "base_start": "2025-06-04",
+            "base_end": "2025-06-06"
         },
         {
-            "id": 299,
-            "text": "지상골조(세팅층) 완료",
-            "start": "2025-07-01",
-            "end": "2025-07-01",
+            "id": 290,
+            "text": "지하골조(벽체1단) 완료",
+            "start": "2025-06-07",
+            "end": "2025-06-07",
             "duration": 0,
             "progress": 100,
             "type": "milestone",
-            "parent": 1
+            "parent": 1,
+            "base_start": "2025-06-07",
+            "base_end": "2025-06-07"
         },
         {
             "id": 300,
@@ -219,7 +241,9 @@
             "type": "summary",
             "parent": 1,
             "category": "지상골조",
-            "open": true
+            "open": true,
+            "base_start": "2025-06-09",
+            "base_end": "2025-07-01"
         },
         {
             "id": 301,
@@ -232,7 +256,9 @@
             "parent": 300,
             "lazy": false,
             "category": "거푸집",
-            "workType": "indirect"
+            "workType": "indirect",
+            "base_start": "2025-06-08",
+            "base_end": "2025-06-20"
         },
         {
             "id": 302,
@@ -245,7 +271,9 @@
             "parent": 300,
             "lazy": false,
             "category": "벽체",
-            "workType": "direct"
+            "workType": "direct",
+            "base_start": "2025-06-14",
+            "base_end": "2025-06-16"
         },
         {
             "id": 303,
@@ -258,7 +286,9 @@
             "parent": 300,
             "lazy": false,
             "category": "거푸집",
-            "workType": "indirect"
+            "workType": "indirect",
+            "base_start": "2025-06-16",
+            "base_end": "2025-06-23"
         },
         {
             "id": 304,
@@ -271,43 +301,51 @@
             "parent": 300,
             "lazy": false,
             "category": "슬라브",
-            "workType": "direct"
+            "workType": "direct",
+            "base_start": "2025-06-20",
+            "base_end": "2025-06-23"
         },
         {
             "id": 305,
             "text": "세팅층 콘크리트 펌프차 타설",
             "start": "2025-06-24",
             "end": "2025-06-27",
-            "duration": 3.0,
+            "duration": 3,
             "progress": 0,
             "type": "task",
             "parent": 300,
             "lazy": false,
             "category": "타설",
-            "workType": "direct"
+            "workType": "direct",
+            "base_start": "2025-06-23",
+            "base_end": "2025-06-26"
         },
         {
             "id": 306,
             "text": "세팅층 양생 및 검측",
             "start": "2025-06-27",
             "end": "2025-07-01",
-            "duration": 4.0,
+            "duration": 4,
             "progress": 0,
             "type": "task",
             "parent": 300,
             "lazy": false,
             "category": "양생",
-            "workType": "indirect"
+            "workType": "indirect",
+            "base_start": "2025-06-26",
+            "base_end": "2025-06-30"
         },
         {
-            "id": 399,
-            "text": "지상골조(일반,마감층) 완료",
-            "start": "2025-07-12",
-            "end": "2025-07-12",
+            "id": 390,
+            "text": "지상골조(세팅층) 완료",
+            "start": "2025-07-01",
+            "end": "2025-07-01",
             "duration": 0,
             "progress": 100,
             "type": "milestone",
-            "parent": 1
+            "parent": 1,
+            "base_start": "2025-07-01",
+            "base_end": "2025-07-01"
         },
         {
             "id": 400,
@@ -319,20 +357,24 @@
             "type": "summary",
             "parent": 1,
             "category": "지상골조",
-            "open": true
+            "open": true,
+            "base_start": "2025-07-02",
+            "base_end": "2025-07-12"
         },
         {
             "id": 401,
             "text": "일반·마감층 갱폼 설치 및 해체",
             "start": "2025-07-02",
             "end": "2025-07-04",
-            "duration": 3.0,
+            "duration": 3,
             "progress": 0,
             "type": "task",
             "parent": 400,
             "lazy": false,
             "category": "거푸집",
-            "workType": "indirect"
+            "workType": "indirect",
+            "base_start": "2025-07-01",
+            "base_end": "2025-07-03"
         },
         {
             "id": 402,
@@ -345,7 +387,9 @@
             "parent": 400,
             "lazy": false,
             "category": "벽체",
-            "workType": "direct"
+            "workType": "direct",
+            "base_start": "2025-07-02",
+            "base_end": "2025-07-04"
         },
         {
             "id": 403,
@@ -358,7 +402,9 @@
             "parent": 400,
             "lazy": false,
             "category": "거푸집",
-            "workType": "indirect"
+            "workType": "indirect",
+            "base_start": "2025-07-03",
+            "base_end": "2025-07-06"
         },
         {
             "id": 404,
@@ -371,65 +417,221 @@
             "parent": 400,
             "lazy": false,
             "category": "슬라브",
-            "workType": "direct"
+            "workType": "direct",
+            "base_start": "2025-07-05",
+            "base_end": "2025-07-07"
         },
         {
             "id": 405,
             "text": "일반·마감층 콘크리트 펌프차 타설",
             "start": "2025-07-08",
             "end": "2025-07-10",
-            "duration": 3.0,
+            "duration": 3,
             "progress": 0,
             "type": "task",
             "parent": 400,
             "lazy": false,
             "category": "타설",
-            "workType": "direct"
+            "workType": "direct",
+            "base_start": "2025-07-07",
+            "base_end": "2025-07-09"
         },
         {
             "id": 406,
             "text": "일반·마감층 양생 및 검측",
             "start": "2025-07-10",
             "end": "2025-07-12",
-            "duration": 2.0,
+            "duration": 2,
             "progress": 0,
             "type": "task",
             "parent": 400,
             "lazy": false,
             "category": "양생",
-            "workType": "indirect"
+            "workType": "indirect",
+            "base_start": "2025-07-09",
+            "base_end": "2025-07-11"
+        },
+        {
+            "id": 490,
+            "text": "지상골조(일반,마감층) 완료",
+            "start": "2025-07-12",
+            "end": "2025-07-12",
+            "duration": 0,
+            "progress": 100,
+            "type": "milestone",
+            "parent": 1,
+            "base_start": "2025-07-12",
+            "base_end": "2025-07-12"
         }
     ],
     "links": [
-        { "id": 1, "source": 101, "target": 102, "type": "s2s" },
-        { "id": 2, "source": 102, "target": 103, "type": "s2s" },
-        { "id": 3, "source": 103, "target": 104, "type": "s2s" },
-        { "id": 4, "source": 104, "target": 105, "type": "s2s" },
-        { "id": 5, "source": 105, "target": 106, "type": "e2s" },
-        { "id": 6, "source": 106, "target": 107, "type": "e2s" },
-        { "id": 7, "source": 107, "target": 99, "type": "e2e" },
-        { "id": 8, "source": 99, "target": 201, "type": "e2s" },
-        { "id": 9, "source": 201, "target": 202, "type": "s2s" },
-        { "id": 10, "source": 202, "target": 203, "type": "e2s" },
-        { "id": 11, "source": 203, "target": 204, "type": "e2s" },
-        { "id": 12, "source": 204, "target": 199, "type": "e2e" },
-        { "id": 13, "source": 199, "target": 301, "type": "e2s" },
-        { "id": 14, "source": 301, "target": 302, "type": "s2s" },
-        { "id": 15, "source": 302, "target": 303, "type": "s2s" },
-        { "id": 16, "source": 303, "target": 304, "type": "s2s" },
-        { "id": 17, "source": 304, "target": 305, "type": "e2s" },
-        { "id": 18, "source": 305, "target": 306, "type": "e2s" },
-        { "id": 19, "source": 306, "target": 299, "type": "e2e" },
-        { "id": 20, "source": 299, "target": 401, "type": "e2s" },
-        { "id": 21, "source": 401, "target": 402, "type": "s2s" },
-        { "id": 22, "source": 402, "target": 403, "type": "s2s" },
-        { "id": 23, "source": 403, "target": 404, "type": "s2s" },
-        { "id": 24, "source": 404, "target": 405, "type": "e2s" },
-        { "id": 25, "source": 405, "target": 406, "type": "e2s" },
-        { "id": 26, "source": 406, "target": 399, "type": "e2e" }
+        {
+            "id": 1,
+            "source": 101,
+            "target": 102,
+            "type": "e2s"
+        },
+        {
+            "id": 2,
+            "source": 102,
+            "target": 103,
+            "type": "e2s"
+        },
+        {
+            "id": 3,
+            "source": 103,
+            "target": 104,
+            "type": "e2s"
+        },
+        {
+            "id": 4,
+            "source": 104,
+            "target": 105,
+            "type": "e2s"
+        },
+        {
+            "id": 5,
+            "source": 105,
+            "target": 106,
+            "type": "e2s"
+        },
+        {
+            "id": 6,
+            "source": 106,
+            "target": 107,
+            "type": "e2s"
+        },
+        {
+            "id": 7,
+            "source": 107,
+            "target": 190,
+            "type": "e2s"
+        },
+        {
+            "id": 8,
+            "source": 190,
+            "target": 201,
+            "type": "e2s"
+        },
+        {
+            "id": 9,
+            "source": 201,
+            "target": 202,
+            "type": "s2s"
+        },
+        {
+            "id": 10,
+            "source": 202,
+            "target": 203,
+            "type": "e2s"
+        },
+        {
+            "id": 11,
+            "source": 203,
+            "target": 204,
+            "type": "e2s"
+        },
+        {
+            "id": 12,
+            "source": 204,
+            "target": 290,
+            "type": "e2e"
+        },
+        {
+            "id": 13,
+            "source": 290,
+            "target": 301,
+            "type": "e2s"
+        },
+        {
+            "id": 14,
+            "source": 301,
+            "target": 302,
+            "type": "s2s"
+        },
+        {
+            "id": 15,
+            "source": 302,
+            "target": 303,
+            "type": "s2s"
+        },
+        {
+            "id": 16,
+            "source": 303,
+            "target": 304,
+            "type": "s2s"
+        },
+        {
+            "id": 17,
+            "source": 304,
+            "target": 305,
+            "type": "e2s"
+        },
+        {
+            "id": 18,
+            "source": 305,
+            "target": 306,
+            "type": "e2s"
+        },
+        {
+            "id": 19,
+            "source": 306,
+            "target": 299,
+            "type": "e2e"
+        },
+        {
+            "id": 20,
+            "source": 299,
+            "target": 401,
+            "type": "e2s"
+        },
+        {
+            "id": 21,
+            "source": 401,
+            "target": 402,
+            "type": "s2s"
+        },
+        {
+            "id": 22,
+            "source": 402,
+            "target": 403,
+            "type": "s2s"
+        },
+        {
+            "id": 23,
+            "source": 403,
+            "target": 404,
+            "type": "s2s"
+        },
+        {
+            "id": 24,
+            "source": 404,
+            "target": 405,
+            "type": "e2s"
+        },
+        {
+            "id": 25,
+            "source": 405,
+            "target": 406,
+            "type": "e2s"
+        },
+        {
+            "id": 26,
+            "source": 406,
+            "target": 490,
+            "type": "e2s"
+        }
     ],
     "scales": [
-        { "unit": "month", "step": 1, "format": "yyyy년 M월" },
-        { "unit": "day", "step": 1, "format": "d일" }
+        {
+            "unit": "month",
+            "step": 1,
+            "format": "yyyy년 M월"
+        },
+        {
+            "unit": "day",
+            "step": 1,
+            "format": "d일"
+        }
     ]
 }

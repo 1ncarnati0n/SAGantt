@@ -75,12 +75,6 @@ export const GanttPreview: React.FC = () => {
         const processedTasks = data.tasks.map((task) => {
             const updatedTask = { ...task };
 
-            // 마일스톤 처리: duration을 0으로 설정하여 다이아몬드로 표시
-            if (task.type === "milestone") {
-                updatedTask.duration = 0;
-                updatedTask.progress = 100;
-            }
-
             // workType에 따른 색상 지정 (직접작업/간접작업 구분)
             if (task.workType && WORK_TYPE_COLORS[task.workType as string]) {
                 updatedTask.color = WORK_TYPE_COLORS[task.workType as string];
@@ -173,6 +167,7 @@ export const GanttPreview: React.FC = () => {
                         taskTypes={TASK_TYPES}
                         cellWidth={CELL_WIDTH_MAP[viewType]}
                         cellHeight={CELL_HEIGHT}
+                        baselines={true}
                     />
                 </Willow>
             </div>

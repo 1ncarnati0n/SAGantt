@@ -7,7 +7,7 @@ export interface DemoTask {
     id: number;
     text: string;
     start: Date;
-    end: Date;
+    end?: Date;
     duration: number;
     progress: number;
     type: TaskType;
@@ -17,6 +17,9 @@ export interface DemoTask {
     workType?: WorkType;
     color?: string;
     open?: boolean;
+    base_start?: Date;
+    base_end?: Date;
+    base_duration?: number;
     [key: string]: unknown;
 }
 
@@ -54,6 +57,9 @@ interface MockTask {
     workType?: WorkType;
     color?: string;
     open?: boolean;
+    base_start?: string;
+    base_end?: string;
+    base_duration?: number;
 }
 
 interface MockLink {
@@ -76,11 +82,23 @@ interface MockSchedule {
 }
 
 const parseMockSchedule = (mock: MockSchedule): DemoSchedule => ({
-    tasks: mock.tasks.map((task) => ({
-        ...task,
-        start: new Date(task.start),
-        end: new Date(task.end),
-    })),
+    tasks: mock.tasks.map((task) => {
+        const {
+            base_start,
+            base_end,
+            start,
+            end,
+            ...rest
+        } = task;
+
+        return {
+            ...rest,
+            start: new Date(start),
+            end: new Date(end),
+            ...(base_start ? { base_start: new Date(base_start) } : {}),
+            ...(base_end ? { base_end: new Date(base_end) } : {}),
+        } as DemoTask;
+    }),
     links: mock.links.map((link) => ({ ...link })),
     scales: mock.scales.map((scale) => ({ ...scale })),
 });
@@ -94,13 +112,19 @@ export const getDemoSchedule = (): DemoSchedule => ({
         const processedTask = {
             ...task,
             start: new Date(task.start),
-            end: new Date(task.end),
+            ...(task.end ? { end: new Date(task.end) } : {}),
+            ...(task.base_start ? { base_start: new Date(task.base_start) } : {}),
+            ...(task.base_end ? { base_end: new Date(task.base_end) } : {}),
         };
 
         // 마일스톤을 다이아몬드로 표시하기 위한 처리
         if (task.type === "milestone") {
-            processedTask.duration = 0;
-            processedTask.progress = 100;
+            const { end, ...rest } = processedTask;
+            return {
+                ...rest,
+                duration: 0,
+                progress: 100,
+            };
         }
 
         return processedTask;
