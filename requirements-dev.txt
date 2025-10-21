@@ -1,6 +1,0 @@
-# Development and test dependencies
-pytest
-pytest-cov
-ruff
-black
-pip-audit
