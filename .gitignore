@@ -82,3 +82,4 @@ $RECYCLE.BIN/
 !.yarn/plugins
 !.yarn/sdks
 !.yarn/versions
+data/

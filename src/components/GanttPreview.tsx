@@ -185,6 +185,10 @@ export const GanttPreview: React.FC = () => {
   const [schedule, setSchedule] = useState<any>(null);
   const apiRef = useRef<any>(null);
 
+  // 현재 tasks와 links를 추적 (Gantt 내부 상태 동기화)
+  const currentTasksRef = useRef<any[]>([]);
+  const currentLinksRef = useRef<any[]>([]);
+
   // 컴포넌트 마운트 시 저장된 데이터 로드
   useEffect(() => {
     const loadData = async () => {
@@ -195,6 +199,7 @@ export const GanttPreview: React.FC = () => {
         if (response.ok) {
           const data = await response.json();
           console.log("Loaded data:", data);
+          console.log("📊 Tasks count:", data.tasks?.length, "Links count:", data.links?.length);
 
           // 날짜 문자열을 Date 객체로 변환
           const processedTasks = data.tasks.map((task: any) => {
@@ -219,7 +224,13 @@ export const GanttPreview: React.FC = () => {
             links: data.links || [],
             scales: data.scales || [],
           });
+
+          // Ref에도 초기 데이터 저장
+          currentTasksRef.current = processedTasks;
+          currentLinksRef.current = data.links || [];
+
           console.log("Data loaded successfully");
+          console.log("✅ Ref initialized - Tasks:", currentTasksRef.current.length, "Links:", currentLinksRef.current.length);
         } else {
           console.log("Failed to load data");
         }
@@ -234,37 +245,37 @@ export const GanttPreview: React.FC = () => {
   }, []);
 
   const handleSave = useCallback(async () => {
-    console.log("Save button clicked");
+    console.log("=== Save Button Clicked ===");
 
     if (!import.meta.env.DEV) {
       console.error("Not in development mode");
       return;
     }
 
-    if (!apiRef.current) {
-      console.error("API ref is not available");
-      alert("간트 차트가 아직 초기화되지 않았습니다. 잠시 후 다시 시도해주세요.");
-      return;
-    }
-
     try {
       setSaveState("saving");
 
-      // apiRef에서 현재 상태 가져오기
-      const state = apiRef.current.getState();
-      console.log("Current state from apiRef:", state);
+      // Ref에 저장된 현재 데이터 사용
+      const tasksToSave = currentTasksRef.current;
+      const linksToSave = currentLinksRef.current;
 
-      if (!state || !state.tasks) {
-        throw new Error("Failed to get state from Gantt");
+      console.log("Tasks to save:", tasksToSave.length);
+      console.log("Links to save:", linksToSave.length);
+      console.log("Sample task:", tasksToSave[0]);
+
+      if (tasksToSave.length === 0) {
+        throw new Error("No tasks to save");
       }
 
+      // 데이터 직렬화
       const payload = serializeSchedule(
-        state.tasks || [],
-        state.links || [],
+        tasksToSave,
+        linksToSave,
         schedule?.scales || []
       );
-      console.log("Payload to save:", payload);
+      console.log("Serialized payload:", payload);
 
+      // 서버에 저장
       const response = await fetch("/api/mock", {
         method: "POST",
         headers: {
@@ -273,14 +284,12 @@ export const GanttPreview: React.FC = () => {
         body: JSON.stringify(payload),
       });
 
-      console.log("Response status:", response.status);
-
       if (!response.ok) {
-        throw new Error(`Failed to persist mock data: ${response.statusText}`);
+        throw new Error(`Server error: ${response.statusText}`);
       }
 
       const result = await response.json();
-      console.log("Save result:", result);
+      console.log("Save successful:", result);
 
       setSaveState("saved");
       setHasChanges(false);
@@ -294,45 +303,64 @@ export const GanttPreview: React.FC = () => {
     }
   }, [schedule]);
 
+  // 변경 감지
   const markAsChanged = useCallback(() => {
-    console.log("Change detected - marking as changed");
     setHasChanges(true);
     setSaveState((prev) => (prev === "saved" ? "idle" : prev));
   }, []);
 
-  // Gantt 이벤트 핸들러들 - 단순히 변경 감지만 수행
-  const handleTaskUpdate = useCallback(() => {
-    console.log("Task updated");
+  // Ref 업데이트 헬퍼 함수
+  const updateTaskInRef = useCallback((updatedTask: any) => {
+    const index = currentTasksRef.current.findIndex((t) => t.id === updatedTask.id);
+    if (index !== -1) {
+      currentTasksRef.current[index] = { ...currentTasksRef.current[index], ...updatedTask };
+    }
+    console.log("✓ Task updated in ref:", updatedTask.id);
+  }, []);
+
+  // Gantt 이벤트 핸들러들 - ref 업데이트 + 변경 감지
+  const handleTaskUpdate = useCallback((event: any) => {
+    console.log("📝 Task updated:", event);
+    updateTaskInRef(event);
+    markAsChanged();
+  }, [markAsChanged, updateTaskInRef]);
+
+  const handleTaskAdd = useCallback((event: any) => {
+    console.log("➕ Task added:", event);
+    currentTasksRef.current.push(event);
     markAsChanged();
   }, [markAsChanged]);
 
-  const handleTaskAdd = useCallback(() => {
-    console.log("Task added");
+  const handleTaskDelete = useCallback((event: any) => {
+    console.log("🗑️ Task deleted:", event.id);
+    currentTasksRef.current = currentTasksRef.current.filter((t) => t.id !== event.id);
     markAsChanged();
   }, [markAsChanged]);
 
-  const handleTaskDelete = useCallback(() => {
-    console.log("Task deleted");
+  const handleTaskMove = useCallback((event: any) => {
+    console.log("🔄 Task moved:", event);
+    updateTaskInRef(event);
+    markAsChanged();
+  }, [markAsChanged, updateTaskInRef]);
+
+  const handleLinkAdd = useCallback((event: any) => {
+    console.log("🔗 Link added:", event);
+    currentLinksRef.current.push(event);
     markAsChanged();
   }, [markAsChanged]);
 
-  const handleTaskMove = useCallback(() => {
-    console.log("Task moved");
+  const handleLinkUpdate = useCallback((event: any) => {
+    console.log("🔗 Link updated:", event);
+    const index = currentLinksRef.current.findIndex((l) => l.id === event.id);
+    if (index !== -1) {
+      currentLinksRef.current[index] = { ...currentLinksRef.current[index], ...event };
+    }
     markAsChanged();
   }, [markAsChanged]);
 
-  const handleLinkAdd = useCallback(() => {
-    console.log("Link added");
-    markAsChanged();
-  }, [markAsChanged]);
-
-  const handleLinkUpdate = useCallback(() => {
-    console.log("Link updated");
-    markAsChanged();
-  }, [markAsChanged]);
-
-  const handleLinkDelete = useCallback(() => {
-    console.log("Link deleted");
+  const handleLinkDelete = useCallback((event: any) => {
+    console.log("🔗 Link deleted:", event.id);
+    currentLinksRef.current = currentLinksRef.current.filter((l) => l.id !== event.id);
     markAsChanged();
   }, [markAsChanged]);
 
@@ -442,6 +470,7 @@ export const GanttPreview: React.FC = () => {
         ) : schedule ? (
           <Willow>
             <Gantt
+              init={(api: any) => (apiRef.current = api)}
               tasks={schedule.tasks}
               links={schedule.links}
               scales={displayScales}
@@ -450,7 +479,6 @@ export const GanttPreview: React.FC = () => {
               cellWidth={CELL_WIDTH_MAP[viewType]}
               cellHeight={CELL_HEIGHT}
               baselines={showBaselines}
-              apiRef={apiRef}
               onUpdateTask={handleTaskUpdate}
               onAddTask={handleTaskAdd}
               onDeleteTask={handleTaskDelete}
