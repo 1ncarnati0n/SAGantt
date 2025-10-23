@@ -1,5 +1,12 @@
 @import "wx-react-gantt/dist/gantt.css";
 
+.wx-baseline.x2-1qryx5p.x2-1qryx5p {
+    position: absolute;
+    background-color: #292929;
+    border-radius: var(--wx-gantt-baseline-border-radius);
+    z-index: 1;
+}
+
 .wx-willow-theme {
 	--wx-gantt-border: 1px solid #1d1e261a;
 	--wx-gantt-taskscale-border: var(--wx-gantt-border);
@@ -12,7 +19,7 @@
 		var(--wx-font-weight) 
 		var(--wx-font-size)
 		var(--wx-font-family);
-	--wx-gantt-bar-border-radius: 3px;
+	--wx-gantt-bar-border-radius: 0px;
 	--wx-gantt-milestone-border-radius: 3px;
 
 	--wx-gantt-summary-color: #e7e7e7b4;
@@ -36,17 +43,18 @@
 	--wx-gantt-milestone-color: #000000;
 
 	--wx-gantt-select-color: #eaedf5;
-	--wx-gantt-link-color: #9fa1ae;
+	--wx-gantt-link-color: #3f3f3f;
 	--wx-gantt-link-marker-background: #eaedf5;
 	--wx-gantt-link-marker-color: #9fa1ae;
 
-	--wx-gantt-bar-shadow: 0px 1px 2px rgba(44, 47, 60, 0.06),
-		0px 3px 10px rgba(44, 47, 60, 0.12);
+	--wx-gantt-bar-shadow: 
+		2px 2px 1px rgba(27, 27, 27, 0.70), 
+		2px 2px 1px rgba(27, 27, 27, 0.70);
 
 	--wx-gantt-progress-marker-height: 26px;
 	--wx-gantt-progress-border-color: #181818;
 
-	--wx-gantt-baseline-border-radius: 2px;
+	--wx-gantt-baseline-border-radius: 4px;
 
 
 

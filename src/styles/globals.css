@@ -26,7 +26,7 @@ h1 {
 
 .gantt-wrapper {
     height: 46rem;
-    border-radius: 0.75rem;
+    border: 1px solid black;
     overflow: hidden;
-    box-shadow: 0 12px 32px rgba(15, 23, 42, 0.12);
+    box-shadow: 5px 5px 1px rgba(27, 27, 27, 0.842);
 }
