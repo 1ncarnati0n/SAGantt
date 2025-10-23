@@ -2,9 +2,10 @@
 
 .wx-willow-theme {
 	--wx-gantt-border: 1px solid #1d1e261a;
-	--wx-gantt-taskscale-border: 1px solid #000000e2;
-	--wx-gantt-form-header-border: none;
-	--wx-gantt-icon-color: #9fa1ae;
+	--wx-gantt-taskscale-border: var(--wx-gantt-border);
+
+	--wx-gantt-form-header-border: 1px solid green;
+	--wx-gantt-icon-color: #02006e;
 
 	/* bars */
 	--wx-gantt-bar-font: 
@@ -14,19 +15,25 @@
 	--wx-gantt-bar-border-radius: 3px;
 	--wx-gantt-milestone-border-radius: 3px;
 
+	--wx-gantt-summary-color: #e7e7e7b4;
+	--wx-gantt-summary-font-color: #000000;
+	--wx-gantt-summary-fill-color: #8d8d8d8c;
+	--wx-gantt-summary-border-color: #000000;
+	--wx-gantt-summary-border: 1px solid #000000;
+
 	--wx-gantt-task-color: #3983eb;
 	--wx-gantt-task-font-color: #fff;
 	--wx-gantt-task-fill-color: #1f6bd9;
 	--wx-gantt-task-border-color: #1f6bd9;
 	--wx-gantt-task-border: 1px solid transparent;
 
-	--wx-gantt-project-color: #00ba94;
+	--wx-gantt-project-color: #91ffe9;
 	--wx-gantt-project-font-color: #ffffff;
-	--wx-gantt-project-fill-color: #099f81;
+	--wx-gantt-project-fill-color: #005a48;
 	--wx-gantt-project-border-color: #099f81;
 	--wx-gantt-project-border: 1px solid transparent;
 
-	--wx-gantt-milestone-color: #ad44ab;
+	--wx-gantt-milestone-color: #000000;
 
 	--wx-gantt-select-color: #eaedf5;
 	--wx-gantt-link-color: #9fa1ae;
@@ -40,6 +47,20 @@
 	--wx-gantt-progress-border-color: #181818;
 
 	--wx-gantt-baseline-border-radius: 2px;
+
+
+
+	/* table */
+    --wx-table-select-background: var(--wx-gantt-select-color);
+    --wx-table-select-focus-background: var(--wx-gantt-select-color);
+    --wx-table-select-border: none;
+    --wx-table-cell-border: var(--wx-grid-body-row-border);
+    --wx-table-header-background: var(--wx-background);
+    --wx-table-header-border: var(--wx-gantt-border);
+    --wx-table-header-cell-border: var(--wx-gantt-border);
+
+	--wx-checkbox-border-color: 1px solid red; 
+
 
 	/* grid */
 	--wx-grid-header-font: 
@@ -55,8 +76,8 @@
 		var(--wx-font-size)
 		var(--wx-font-family);
 	--wx-grid-body-font-color: var(--wx-color-font);
-	--wx-grid-body-row-border: var(--wx-gantt-taskscale-border);
-	--wx-grid-body-cell-border: 1px solid transparent;
+	--wx-grid-body-row-border: var(--wx-gantt-border);
+	--wx-grid-body-cell-border: var(--wx-gantt-border);
 
 	/* timescale */
 	--wx-timescale-font: 
