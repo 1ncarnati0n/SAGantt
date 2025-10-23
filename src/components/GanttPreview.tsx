@@ -107,6 +107,48 @@ const normalizeNumber = (value: unknown): number | undefined => {
   return undefined;
 };
 
+const idsAreEqual = (left: unknown, right: unknown): boolean => String(left) === String(right);
+
+const toPlainTask = (payload: any): Record<string, unknown> | null => {
+  if (!payload) {
+    return null;
+  }
+
+  if (payload.task && typeof payload.task === "object") {
+    const normalizedTask = { ...payload.task };
+    if (normalizedTask.id === undefined && payload.id !== undefined) {
+      normalizedTask.id = payload.id;
+    }
+    return normalizedTask;
+  }
+
+  if (typeof payload === "object") {
+    return { ...payload };
+  }
+
+  return null;
+};
+
+const toPlainLink = (payload: any): Record<string, unknown> | null => {
+  if (!payload) {
+    return null;
+  }
+
+  if (payload.link && typeof payload.link === "object") {
+    const normalizedLink = { ...payload.link };
+    if (normalizedLink.id === undefined && payload.id !== undefined) {
+      normalizedLink.id = payload.id;
+    }
+    return normalizedLink;
+  }
+
+  if (typeof payload === "object") {
+    return { ...payload };
+  }
+
+  return null;
+};
+
 const serializeTask = (taskInput: Record<string, unknown>): Record<string, unknown> => {
   // 저장할 필드만 선택 (화이트리스트 방식)
   const serialized: Record<string, unknown> = {};
@@ -188,6 +230,21 @@ export const GanttPreview: React.FC = () => {
   // 현재 tasks와 links를 추적 (Gantt 내부 상태 동기화)
   const currentTasksRef = useRef<any[]>([]);
   const currentLinksRef = useRef<any[]>([]);
+
+  const getTaskFromApi = useCallback((taskId: unknown): Record<string, unknown> | null => {
+    const api = apiRef.current;
+    if (!api || typeof api.getTask !== "function") {
+      return null;
+    }
+
+    try {
+      const task = api.getTask(taskId);
+      return task ? { ...task } : null;
+    } catch (error) {
+      console.warn("Failed to fetch task from API:", error);
+      return null;
+    }
+  }, []);
 
   // 컴포넌트 마운트 시 저장된 데이터 로드
   useEffect(() => {
@@ -310,13 +367,35 @@ export const GanttPreview: React.FC = () => {
   }, []);
 
   // Ref 업데이트 헬퍼 함수
-  const updateTaskInRef = useCallback((updatedTask: any) => {
-    const index = currentTasksRef.current.findIndex((t) => t.id === updatedTask.id);
-    if (index !== -1) {
-      currentTasksRef.current[index] = { ...currentTasksRef.current[index], ...updatedTask };
+  const updateTaskInRef = useCallback((taskPayload: any) => {
+    const normalizedTask = toPlainTask(taskPayload);
+    const targetId =
+      normalizedTask?.id ??
+      taskPayload?.id ??
+      (typeof taskPayload === "string" || typeof taskPayload === "number" ? taskPayload : undefined);
+
+    if (targetId === undefined || targetId === null) {
+      console.warn("Cannot update task ref - missing id:", taskPayload);
+      return;
     }
-    console.log("✓ Task updated in ref:", updatedTask.id);
-  }, []);
+
+    const index = currentTasksRef.current.findIndex((t) => idsAreEqual(t.id, targetId));
+    const source = normalizedTask ?? getTaskFromApi(targetId);
+
+    if (!source) {
+      console.warn("Cannot resolve task payload for update:", taskPayload);
+      return;
+    }
+
+    if (index === -1) {
+      currentTasksRef.current.push(source);
+      console.log("✓ Task inserted in ref:", targetId);
+      return;
+    }
+
+    currentTasksRef.current[index] = { ...currentTasksRef.current[index], ...source };
+    console.log("✓ Task updated in ref:", targetId);
+  }, [getTaskFromApi]);
 
   // Gantt 이벤트 핸들러들 - ref 업데이트 + 변경 감지
   const handleTaskUpdate = useCallback((event: any) => {
@@ -327,13 +406,36 @@ export const GanttPreview: React.FC = () => {
 
   const handleTaskAdd = useCallback((event: any) => {
     console.log("➕ Task added:", event);
-    currentTasksRef.current.push(event);
+    const normalizedTask = toPlainTask(event) ?? getTaskFromApi(event?.id);
+
+    if (!normalizedTask || normalizedTask.id === undefined || normalizedTask.id === null) {
+      console.warn("Cannot append task without id:", event);
+      return;
+    }
+
+    const existingIndex = currentTasksRef.current.findIndex((task) => idsAreEqual(task.id, normalizedTask.id));
+    if (existingIndex === -1) {
+      currentTasksRef.current.push(normalizedTask);
+    } else {
+      currentTasksRef.current[existingIndex] = {
+        ...currentTasksRef.current[existingIndex],
+        ...normalizedTask,
+      };
+    }
+
     markAsChanged();
-  }, [markAsChanged]);
+  }, [getTaskFromApi, markAsChanged]);
 
   const handleTaskDelete = useCallback((event: any) => {
-    console.log("🗑️ Task deleted:", event.id);
-    currentTasksRef.current = currentTasksRef.current.filter((t) => t.id !== event.id);
+    const targetId = event?.id ?? event?.task?.id;
+    console.log("🗑️ Task deleted:", targetId);
+
+    if (targetId === undefined || targetId === null) {
+      console.warn("Cannot delete task without id:", event);
+      return;
+    }
+
+    currentTasksRef.current = currentTasksRef.current.filter((t) => !idsAreEqual(t.id, targetId));
     markAsChanged();
   }, [markAsChanged]);
 
@@ -345,22 +447,60 @@ export const GanttPreview: React.FC = () => {
 
   const handleLinkAdd = useCallback((event: any) => {
     console.log("🔗 Link added:", event);
-    currentLinksRef.current.push(event);
+    const normalizedLink = toPlainLink(event);
+
+    if (!normalizedLink || normalizedLink.id === undefined || normalizedLink.id === null) {
+      console.warn("Cannot append link without id:", event);
+      return;
+    }
+
+    const existingIndex = currentLinksRef.current.findIndex((link) => idsAreEqual(link.id, normalizedLink.id));
+    if (existingIndex === -1) {
+      currentLinksRef.current.push(normalizedLink);
+    } else {
+      currentLinksRef.current[existingIndex] = {
+        ...currentLinksRef.current[existingIndex],
+        ...normalizedLink,
+      };
+    }
+
     markAsChanged();
   }, [markAsChanged]);
 
   const handleLinkUpdate = useCallback((event: any) => {
     console.log("🔗 Link updated:", event);
-    const index = currentLinksRef.current.findIndex((l) => l.id === event.id);
+    const normalizedLink = toPlainLink(event);
+    const targetId =
+      normalizedLink?.id ??
+      event?.id ??
+      (typeof event === "string" || typeof event === "number" ? event : undefined);
+
+    if (targetId === undefined || targetId === null) {
+      console.warn("Cannot update link without id:", event);
+      return;
+    }
+
+    const index = currentLinksRef.current.findIndex((l) => idsAreEqual(l.id, targetId));
     if (index !== -1) {
-      currentLinksRef.current[index] = { ...currentLinksRef.current[index], ...event };
+      if (!normalizedLink) {
+        console.warn("Cannot resolve link payload for update:", event);
+        return;
+      }
+      currentLinksRef.current[index] = { ...currentLinksRef.current[index], ...normalizedLink };
     }
     markAsChanged();
   }, [markAsChanged]);
 
   const handleLinkDelete = useCallback((event: any) => {
-    console.log("🔗 Link deleted:", event.id);
-    currentLinksRef.current = currentLinksRef.current.filter((l) => l.id !== event.id);
+    const targetId = event?.id ?? event?.link?.id;
+    console.log("🔗 Link deleted:", targetId);
+
+    if (targetId === undefined || targetId === null) {
+      console.warn("Cannot delete link without id:", event);
+      return;
+    }
+
+    currentLinksRef.current = currentLinksRef.current.filter((l) => !idsAreEqual(l.id, targetId));
     markAsChanged();
   }, [markAsChanged]);
 

@@ -7,7 +7,7 @@ import react from "@vitejs/plugin-react";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
-const mockFilePath = path.resolve(__dirname, "data/schedule.json");
+const mockFilePath = path.resolve(__dirname, "public/mock.json");
 
 export default defineConfig({
     plugins: [
