@@ -3,8 +3,6 @@ import React, { useCallback, useEffect, useMemo, useRef, useState } from "react"
 import { Gantt, Willow, defaultColumns } from "wx-react-gantt";
 import "../styles/ganttTheme.css";
 
-import { getDemoSchedule } from "../data/demoSchedule";
-
 const START_COLUMN_WIDTH = 100;
 
 // cellWidth 맵핑: 각 뷰별 기본 셀 너비
@@ -110,69 +108,56 @@ const normalizeNumber = (value: unknown): number | undefined => {
 };
 
 const serializeTask = (taskInput: Record<string, unknown>): Record<string, unknown> => {
-  const {
-    start,
-    end,
-    base_start,
-    base_end,
-    duration,
-    progress,
-    $open,
-    $level,
-    parent,
-    ...rest
-  } = taskInput;
+  // 저장할 필드만 선택 (화이트리스트 방식)
+  const serialized: Record<string, unknown> = {};
 
-  const serialized: Record<string, unknown> = {
-    ...rest,
-    ...(typeof parent !== "undefined" ? { parent } : {}),
-  };
+  // 필수 필드
+  if (taskInput.id !== undefined) serialized.id = taskInput.id;
+  if (taskInput.text !== undefined) serialized.text = taskInput.text;
+  if (taskInput.type !== undefined) serialized.type = taskInput.type;
 
-  const startDate = toIsoDate(start);
-  if (startDate) {
-    serialized.start = startDate;
-  }
+  // 날짜 필드 (ISO 형식으로 변환)
+  const startDate = toIsoDate(taskInput.start);
+  if (startDate) serialized.start = startDate;
 
-  const endDate = toIsoDate(end);
-  if (endDate) {
-    serialized.end = endDate;
-  }
+  const endDate = toIsoDate(taskInput.end);
+  if (endDate) serialized.end = endDate;
 
-  const baseStart = toIsoDate(base_start);
-  if (baseStart) {
-    serialized.base_start = baseStart;
-  }
+  const baseStart = toIsoDate(taskInput.base_start);
+  if (baseStart) serialized.base_start = baseStart;
 
-  const baseEnd = toIsoDate(base_end);
-  if (baseEnd) {
-    serialized.base_end = baseEnd;
-  }
+  const baseEnd = toIsoDate(taskInput.base_end);
+  if (baseEnd) serialized.base_end = baseEnd;
 
-  const normalizedDuration = normalizeNumber(duration);
+  // 숫자 필드
+  const normalizedDuration = normalizeNumber(taskInput.duration);
   if (typeof normalizedDuration !== "undefined") {
     serialized.duration = normalizedDuration;
   }
 
-  const normalizedProgress = normalizeNumber(progress);
+  const normalizedProgress = normalizeNumber(taskInput.progress);
   if (typeof normalizedProgress !== "undefined") {
     serialized.progress = normalizedProgress;
   }
 
-  // Remove undefined/null values to keep JSON lean.
-  Object.keys(serialized).forEach((key) => {
-    if (key.startsWith("$")) {
-      delete serialized[key];
-      return;
-    }
+  // 선택적 필드
+  if (taskInput.parent !== undefined) serialized.parent = taskInput.parent;
+  if (taskInput.lazy !== undefined) serialized.lazy = taskInput.lazy;
+  if (taskInput.category !== undefined) serialized.category = taskInput.category;
+  if (taskInput.workType !== undefined) serialized.workType = taskInput.workType;
+  if (taskInput.open !== undefined) serialized.open = taskInput.open;
 
-    if (
-      typeof serialized[key] === "undefined" ||
-      serialized[key] === null ||
-      serialized[key] === ""
-    ) {
-      delete serialized[key];
-    }
-  });
+  return serialized;
+};
+
+const serializeLink = (linkInput: Record<string, unknown>): Record<string, unknown> => {
+  // 링크에서 필요한 필드만 저장
+  const serialized: Record<string, unknown> = {};
+
+  if (linkInput.id !== undefined) serialized.id = linkInput.id;
+  if (linkInput.source !== undefined) serialized.source = linkInput.source;
+  if (linkInput.target !== undefined) serialized.target = linkInput.target;
+  if (linkInput.type !== undefined) serialized.type = linkInput.type;
 
   return serialized;
 };
@@ -183,45 +168,102 @@ const serializeSchedule = (
   scales: Array<Record<string, unknown>>,
 ) => ({
   tasks: tasks.map((task) => serializeTask(task)),
-  links: links.map((link) => ({ ...link })),
-  scales: scales.map((scale) => ({ ...scale })),
+  links: links.map((link) => serializeLink(link)),
+  scales: scales.map((scale) => ({
+    unit: scale.unit,
+    step: scale.step,
+    format: scale.format,
+  })),
 });
 
 export const GanttPreview: React.FC = () => {
   const [viewType, setViewType] = useState<ViewType>("day");
   const [showBaselines, setShowBaselines] = useState<boolean>(true);
   const [saveState, setSaveState] = useState<SaveState>("idle");
+  const [hasChanges, setHasChanges] = useState<boolean>(false);
+  const [isLoading, setIsLoading] = useState<boolean>(true);
+  const [schedule, setSchedule] = useState<any>(null);
   const apiRef = useRef<any>(null);
-  const saveTimeoutRef = useRef<number>();
 
-  const schedule = useMemo(() => {
-    const data = getDemoSchedule();
-    // 마일스톤 처리 및 workType에 따른 색상 지정
-    const processedTasks = data.tasks.map((task) => {
-      const updatedTask = { ...task };
+  // 컴포넌트 마운트 시 저장된 데이터 로드
+  useEffect(() => {
+    const loadData = async () => {
+      try {
+        console.log("Loading saved data from API...");
+        const response = await fetch("/api/mock");
 
-      // workType에 따른 색상 지정 (직접작업/간접작업 구분)
-      if (task.workType && WORK_TYPE_COLORS[task.workType as string]) {
-        updatedTask.color = WORK_TYPE_COLORS[task.workType as string];
+        if (response.ok) {
+          const data = await response.json();
+          console.log("Loaded data:", data);
+
+          // 날짜 문자열을 Date 객체로 변환
+          const processedTasks = data.tasks.map((task: any) => {
+            const updatedTask = {
+              ...task,
+              start: new Date(task.start),
+              ...(task.end ? { end: new Date(task.end) } : {}),
+              ...(task.base_start ? { base_start: new Date(task.base_start) } : {}),
+              ...(task.base_end ? { base_end: new Date(task.base_end) } : {}),
+            };
+
+            // workType에 따른 색상 지정
+            if (task.workType && WORK_TYPE_COLORS[task.workType as string]) {
+              updatedTask.color = WORK_TYPE_COLORS[task.workType as string];
+            }
+
+            return updatedTask;
+          });
+
+          setSchedule({
+            tasks: processedTasks,
+            links: data.links || [],
+            scales: data.scales || [],
+          });
+          console.log("Data loaded successfully");
+        } else {
+          console.log("Failed to load data");
+        }
+      } catch (error) {
+        console.error("Error loading data:", error);
+      } finally {
+        setIsLoading(false);
       }
-
-      return updatedTask;
-    });
-    return {
-      ...data,
-      tasks: processedTasks,
     };
+
+    loadData();
   }, []);
 
-  const persistSchedule = useCallback(async () => {
-    if (!apiRef.current || !import.meta.env.DEV) {
+  const handleSave = useCallback(async () => {
+    console.log("Save button clicked");
+
+    if (!import.meta.env.DEV) {
+      console.error("Not in development mode");
+      return;
+    }
+
+    if (!apiRef.current) {
+      console.error("API ref is not available");
+      alert("간트 차트가 아직 초기화되지 않았습니다. 잠시 후 다시 시도해주세요.");
       return;
     }
 
     try {
       setSaveState("saving");
+
+      // apiRef에서 현재 상태 가져오기
       const state = apiRef.current.getState();
-      const payload = serializeSchedule(state.tasks ?? [], state.links ?? [], schedule.scales ?? []);
+      console.log("Current state from apiRef:", state);
+
+      if (!state || !state.tasks) {
+        throw new Error("Failed to get state from Gantt");
+      }
+
+      const payload = serializeSchedule(
+        state.tasks || [],
+        state.links || [],
+        schedule?.scales || []
+      );
+      console.log("Payload to save:", payload);
 
       const response = await fetch("/api/mock", {
         method: "POST",
@@ -231,48 +273,68 @@ export const GanttPreview: React.FC = () => {
         body: JSON.stringify(payload),
       });
 
+      console.log("Response status:", response.status);
+
       if (!response.ok) {
         throw new Error(`Failed to persist mock data: ${response.statusText}`);
       }
 
+      const result = await response.json();
+      console.log("Save result:", result);
+
       setSaveState("saved");
+      setHasChanges(false);
       window.setTimeout(() => {
         setSaveState("idle");
       }, 1500);
     } catch (error) {
-      console.error(error);
+      console.error("Save error:", error);
       setSaveState("error");
+      alert("저장 중 오류가 발생했습니다: " + (error as Error).message);
     }
-  }, [schedule.scales]);
+  }, [schedule]);
 
-  const queuePersist = useCallback(() => {
-    window.clearTimeout(saveTimeoutRef.current);
-    saveTimeoutRef.current = window.setTimeout(() => {
-      void persistSchedule();
-      saveTimeoutRef.current = undefined;
-    }, 400);
-  }, [persistSchedule]);
+  const markAsChanged = useCallback(() => {
+    console.log("Change detected - marking as changed");
+    setHasChanges(true);
+    setSaveState((prev) => (prev === "saved" ? "idle" : prev));
+  }, []);
 
-  useEffect(() => {
-    if (!apiRef.current) {
-      return;
-    }
+  // Gantt 이벤트 핸들러들 - 단순히 변경 감지만 수행
+  const handleTaskUpdate = useCallback(() => {
+    console.log("Task updated");
+    markAsChanged();
+  }, [markAsChanged]);
 
-    const api = apiRef.current;
-    const events = ["add-task", "update-task", "delete-task", "move-task"];
+  const handleTaskAdd = useCallback(() => {
+    console.log("Task added");
+    markAsChanged();
+  }, [markAsChanged]);
 
-    events.forEach((event) => {
-      api.on(event, queuePersist);
-    });
+  const handleTaskDelete = useCallback(() => {
+    console.log("Task deleted");
+    markAsChanged();
+  }, [markAsChanged]);
 
-    return () => {
-      window.clearTimeout(saveTimeoutRef.current);
-      saveTimeoutRef.current = undefined;
-      if (api && typeof api.detach === "function") {
-        api.detach();
-      }
-    };
-  }, [queuePersist]);
+  const handleTaskMove = useCallback(() => {
+    console.log("Task moved");
+    markAsChanged();
+  }, [markAsChanged]);
+
+  const handleLinkAdd = useCallback(() => {
+    console.log("Link added");
+    markAsChanged();
+  }, [markAsChanged]);
+
+  const handleLinkUpdate = useCallback(() => {
+    console.log("Link updated");
+    markAsChanged();
+  }, [markAsChanged]);
+
+  const handleLinkDelete = useCallback(() => {
+    console.log("Link deleted");
+    markAsChanged();
+  }, [markAsChanged]);
 
   const columns = useMemo(() => {
     return defaultColumns.map((column) => {
@@ -301,7 +363,7 @@ export const GanttPreview: React.FC = () => {
     setViewType(newViewType);
   };
 
-  const scales = useMemo(() => {
+  const displayScales = useMemo(() => {
     const config = TIME_SCALE_CONFIGS[viewType];
     return config.scales;
   }, [viewType]);
@@ -353,26 +415,56 @@ export const GanttPreview: React.FC = () => {
         >
           기준 일정 {showBaselines ? "숨기기" : "표시"}
         </button>
+        <button
+          onClick={handleSave}
+          disabled={!hasChanges || saveState === "saving"}
+          className={`ml-2 px-4 py-2 rounded border-none cursor-pointer ${
+            hasChanges && saveState !== "saving"
+              ? "bg-blue-500 text-white font-bold hover:bg-blue-600"
+              : "bg-gray-400 text-gray-200 font-normal cursor-not-allowed"
+          }`}
+          title={`hasChanges: ${hasChanges}, saveState: ${saveState}`}
+        >
+          {saveState === "saving" ? "저장 중..." : "저장"}
+        </button>
         <span className="ml-4 text-sm text-gray-600" role="status">
-          {saveState === "saving" && "저장 중..."}
+          {hasChanges && saveState === "idle" && "변경 사항이 있습니다."}
           {saveState === "saved" && "변경 내용이 mock.json에 저장되었습니다."}
           {saveState === "error" && "저장 실패 - 콘솔을 확인하세요."}
+          <span className="ml-2 text-xs text-gray-400">(Debug: hasChanges={String(hasChanges)})</span>
         </span>
       </div>
       <div className="gantt-wrapper" role="figure" aria-label="Project Gantt chart">
-        <Willow>
-          <Gantt
-            tasks={schedule.tasks}
-            links={schedule.links}
-            scales={scales}
-            columns={columns}
-            taskTypes={TASK_TYPES}
-            cellWidth={CELL_WIDTH_MAP[viewType]}
-            cellHeight={CELL_HEIGHT}
-            baselines={showBaselines}
-            apiRef={apiRef}
-          />
-        </Willow>
+        {isLoading ? (
+          <div className="flex items-center justify-center p-8">
+            <span className="text-gray-600">데이터를 불러오는 중...</span>
+          </div>
+        ) : schedule ? (
+          <Willow>
+            <Gantt
+              tasks={schedule.tasks}
+              links={schedule.links}
+              scales={displayScales}
+              columns={columns}
+              taskTypes={TASK_TYPES}
+              cellWidth={CELL_WIDTH_MAP[viewType]}
+              cellHeight={CELL_HEIGHT}
+              baselines={showBaselines}
+              apiRef={apiRef}
+              onUpdateTask={handleTaskUpdate}
+              onAddTask={handleTaskAdd}
+              onDeleteTask={handleTaskDelete}
+              onMoveTask={handleTaskMove}
+              onAddLink={handleLinkAdd}
+              onUpdateLink={handleLinkUpdate}
+              onDeleteLink={handleLinkDelete}
+            />
+          </Willow>
+        ) : (
+          <div className="flex items-center justify-center p-8">
+            <span className="text-gray-600">데이터를 불러오지 못했습니다.</span>
+          </div>
+        )}
       </div>
     </section>
   );
