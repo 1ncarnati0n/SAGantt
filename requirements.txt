@@ -1,2 +1,2 @@
-# Runtime dependencies
-
+# Runtime dependencies (none required for Python/conda environment)
+# SAGantt is a React/Vite project; install Node packages via `npm install`.

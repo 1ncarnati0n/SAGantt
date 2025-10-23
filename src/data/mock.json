@@ -1,7 +1,7 @@
 {
     "tasks": [
         {
-            "id": 1,
+            "id": 10,
             "text": "골조공정(C.P)",
             "start": "2025-05-05",
             "end": "2025-07-12",
@@ -22,15 +22,15 @@
             "duration": 18,
             "progress": 0,
             "type": "summary",
-            "parent": 1,
+            "parent": 10,
             "category": "지하골조",
             "open": true,
             "base_start": "2025-05-03",
             "base_end": "2025-05-26"
         },
         {
-            "id": 101,
-            "text": "지하 벽체 철근 현장조립",
+            "id": 1001,
+            "text": "지하벽체 철근 현장조립",
             "start": "2025-05-05",
             "end": "2025-05-09",
             "duration": 4.3,
@@ -42,8 +42,8 @@
             "workType": "direct"
         },
         {
-            "id": 102,
-            "text": "지하 벽체 유로폼 설치",
+            "id": 1002,
+            "text": "지하벽체 유로폼 설치",
             "start": "2025-05-07",
             "end": "2025-05-14",
             "duration": 6.8,
@@ -55,7 +55,7 @@
             "workType": "direct"
         },
         {
-            "id": 103,
+            "id": 1003,
             "text": "강관동바리 설치 및 해체",
             "start": "2025-05-11",
             "end": "2025-05-14",
@@ -68,7 +68,7 @@
             "workType": "indirect"
         },
         {
-            "id": 104,
+            "id": 1004,
             "text": "합판거푸집 설치",
             "start": "2025-05-13",
             "end": "2025-05-15",
@@ -81,7 +81,7 @@
             "workType": "indirect"
         },
         {
-            "id": 105,
+            "id": 1005,
             "text": "슬라브 철근 현장조립",
             "start": "2025-05-14",
             "end": "2025-05-19",
@@ -94,7 +94,7 @@
             "workType": "direct"
         },
         {
-            "id": 106,
+            "id": 1006,
             "text": "콘크리트 펌프차 타설",
             "start": "2025-05-17",
             "end": "2025-05-20",
@@ -107,7 +107,7 @@
             "workType": "direct"
         },
         {
-            "id": 107,
+            "id": 1007,
             "text": "콘크리트 양생 및 최종 검측",
             "start": "2025-05-20",
             "end": "2025-05-24",
@@ -120,14 +120,14 @@
             "workType": "indirect"
         },
         {
-            "id": 190,
+            "id": 1900,
             "text": "지하골조(벽체+슬라브) 완료",
             "start": "2025-05-24",
             "end": "2025-05-24",
             "duration": 0,
             "progress": 100,
             "type": "milestone",
-            "parent": 1
+            "parent": 10
         },
         {
             "id": 200,
@@ -137,14 +137,14 @@
             "duration": 12,
             "progress": 0,
             "type": "summary",
-            "parent": 1,
+            "parent": 10,
             "category": "지하골조",
             "open": true,
             "base_start": "2025-05-24",
             "base_end": "2025-06-09"
         },
         {
-            "id": 201,
+            "id": 2001,
             "text": "벽체1단 철근 현장조립",
             "start": "2025-05-26",
             "end": "2025-05-30",
@@ -157,7 +157,7 @@
             "workType": "direct"
         },
         {
-            "id": 202,
+            "id": 2002,
             "text": "벽체1단 유로폼 설치",
             "start": "2025-05-28",
             "end": "2025-06-04",
@@ -170,7 +170,7 @@
             "workType": "direct"
         },
         {
-            "id": 203,
+            "id": 2003,
             "text": "벽체1단 콘크리트 펌프차 타설",
             "start": "2025-06-02",
             "end": "2025-06-05",
@@ -181,262 +181,17 @@
             "lazy": false,
             "category": "타설",
             "workType": "direct"
-        },
-        {
-            "id": 204,
-            "text": "벽체1단 양생 및 검측",
-            "start": "2025-06-05",
-            "end": "2025-06-07",
-            "duration": 2,
-            "progress": 0,
-            "type": "task",
-            "parent": 200,
-            "lazy": false,
-            "category": "양생",
-            "workType": "indirect"
-        },
-        {
-            "id": 290,
-            "text": "지하골조(벽체1단) 완료",
-            "start": "2025-06-07",
-            "end": "2025-06-07",
-            "duration": 0,
-            "progress": 100,
-            "type": "milestone",
-            "parent": 1
-        },
-        {
-            "id": 300,
-            "text": "지상골조(세팅층)",
-            "start": "2025-06-09",
-            "end": "2025-07-01",
-            "duration": 19,
-            "progress": 0,
-            "type": "summary",
-            "parent": 1,
-            "category": "지상골조",
-            "open": true,
-            "base_start": "2025-06-07",
-            "base_end": "2025-07-03"
-        },
-        {
-            "id": 301,
-            "text": "세팅층 갱폼 설치 및 해체",
-            "start": "2025-06-09",
-            "end": "2025-06-21",
-            "duration": 11.6,
-            "progress": 0,
-            "type": "task",
-            "parent": 300,
-            "lazy": false,
-            "category": "거푸집",
-            "workType": "indirect"
-        },
-        {
-            "id": 302,
-            "text": "세팅층 철근 현장조립 (기둥/벽)",
-            "start": "2025-06-15",
-            "end": "2025-06-17",
-            "duration": 1.6,
-            "progress": 0,
-            "type": "task",
-            "parent": 300,
-            "lazy": false,
-            "category": "벽체",
-            "workType": "direct"
-        },
-        {
-            "id": 303,
-            "text": "세팅층 알루미늄폼 설치 및 해체",
-            "start": "2025-06-17",
-            "end": "2025-06-24",
-            "duration": 6.9,
-            "progress": 0,
-            "type": "task",
-            "parent": 300,
-            "lazy": false,
-            "category": "거푸집",
-            "workType": "indirect"
-        },
-        {
-            "id": 304,
-            "text": "세팅층 철근 현장조립 (슬라브)",
-            "start": "2025-06-21",
-            "end": "2025-06-24",
-            "duration": 2.6,
-            "progress": 0,
-            "type": "task",
-            "parent": 300,
-            "lazy": false,
-            "category": "슬라브",
-            "workType": "direct"
-        },
-        {
-            "id": 305,
-            "text": "세팅층 콘크리트 펌프차 타설",
-            "start": "2025-06-24",
-            "end": "2025-06-27",
-            "duration": 3,
-            "progress": 0,
-            "type": "task",
-            "parent": 300,
-            "lazy": false,
-            "category": "타설",
-            "workType": "direct"
-        },
-        {
-            "id": 306,
-            "text": "세팅층 양생 및 검측",
-            "start": "2025-06-27",
-            "end": "2025-07-01",
-            "duration": 4,
-            "progress": 0,
-            "type": "task",
-            "parent": 300,
-            "lazy": false,
-            "category": "양생",
-            "workType": "indirect"
-        },
-        {
-            "id": 390,
-            "text": "지상골조(세팅층) 완료",
-            "start": "2025-07-01",
-            "end": "2025-07-01",
-            "duration": 0,
-            "progress": 100,
-            "type": "milestone",
-            "parent": 1
-        },
-        {
-            "id": 400,
-            "text": "지상골조(일반,마감 층)",
-            "start": "2025-07-02",
-            "end": "2025-07-12",
-            "duration": 8,
-            "progress": 0,
-            "type": "summary",
-            "parent": 1,
-            "category": "지상골조",
-            "open": true,
-            "base_start": "2025-06-30",
-            "base_end": "2025-07-14"
-        },
-        {
-            "id": 401,
-            "text": "일반·마감층 갱폼 설치 및 해체",
-            "start": "2025-07-02",
-            "end": "2025-07-04",
-            "duration": 3,
-            "progress": 0,
-            "type": "task",
-            "parent": 400,
-            "lazy": false,
-            "category": "거푸집",
-            "workType": "indirect"
-        },
-        {
-            "id": 402,
-            "text": "일반·마감층 철근 현장조립 (기둥/벽)",
-            "start": "2025-07-03",
-            "end": "2025-07-05",
-            "duration": 1.6,
-            "progress": 0,
-            "type": "task",
-            "parent": 400,
-            "lazy": false,
-            "category": "벽체",
-            "workType": "direct"
-        },
-        {
-            "id": 403,
-            "text": "일반·마감층 알루미늄폼 설치 및 해체",
-            "start": "2025-07-04",
-            "end": "2025-07-07",
-            "duration": 3.2,
-            "progress": 0,
-            "type": "task",
-            "parent": 400,
-            "lazy": false,
-            "category": "거푸집",
-            "workType": "indirect"
-        },
-        {
-            "id": 404,
-            "text": "일반·마감층 철근 현장조립 (슬라브)",
-            "start": "2025-07-06",
-            "end": "2025-07-08",
-            "duration": 2.6,
-            "progress": 0,
-            "type": "task",
-            "parent": 400,
-            "lazy": false,
-            "category": "슬라브",
-            "workType": "direct"
-        },
-        {
-            "id": 405,
-            "text": "일반·마감층 콘크리트 펌프차 타설",
-            "start": "2025-07-08",
-            "end": "2025-07-10",
-            "duration": 3,
-            "progress": 0,
-            "type": "task",
-            "parent": 400,
-            "lazy": false,
-            "category": "타설",
-            "workType": "direct"
-        },
-        {
-            "id": 406,
-            "text": "일반·마감층 양생 및 검측",
-            "start": "2025-07-10",
-            "end": "2025-07-12",
-            "duration": 2,
-            "progress": 0,
-            "type": "task",
-            "parent": 400,
-            "lazy": false,
-            "category": "양생",
-            "workType": "indirect"
-        },
-        {
-            "id": 490,
-            "text": "지상골조(일반,마감층) 완료",
-            "start": "2025-07-12",
-            "end": "2025-07-12",
-            "duration": 0,
-            "progress": 100,
-            "type": "milestone",
-            "parent": 1
         }
     ],
     "links": [
-        {"id":1,"source":101,"target":102,"type":"e2s"},
-        {"id":2,"source":102,"target":103,"type":"e2s"},
-        {"id":3,"source":103,"target":104,"type":"e2s"},
-        {"id":4,"source":104,"target":105,"type":"e2s"},
-        {"id":5,"source":105,"target":106,"type":"e2s"},
-        {"id":6,"source":106,"target":107,"type":"e2s"},
-        {"id":7,"source":107,"target":190,"type":"e2s"},
-        {"id":8,"source":190,"target":200,"type":"e2s"},
-        {"id":9,"source":201,"target":202,"type":"e2s"},
-        {"id":10,"source":202,"target":203,"type":"e2s"},
-        {"id":11,"source":203,"target":204,"type":"e2s"},
-        {"id":12,"source":204,"target":290,"type":"e2s"},
-        {"id":13,"source":290,"target":300,"type":"e2s"},
-        {"id":14,"source":301,"target":302,"type":"s2s"},
-        {"id":15,"source":302,"target":303,"type":"s2s"},
-        {"id":16,"source":303,"target":304,"type":"s2s"},
-        {"id":17,"source":304,"target":305,"type":"e2s"},
-        {"id":18,"source":305,"target":306,"type":"e2s"},
-        {"id":19,"source":306,"target":390,"type":"e2s"},
-        {"id":20,"source":390,"target":400,"type":"e2s"},
-        {"id":21,"source":401,"target":402,"type":"s2s"},
-        {"id":22,"source":402,"target":403,"type":"s2s"},
-        {"id":23,"source":403,"target":404,"type":"s2s"},
-        {"id":24,"source":404,"target":405,"type":"e2s"},
-        {"id":25,"source":405,"target":406,"type":"e2s"},
-        {"id":26,"source":406,"target":490,"type":"e2s"}
+        {"id": 10, "source": 1001, "target": 1002, "type": "e2s"}, 
+        {"id": 20, "source": 1002, "target": 1003, "type": "e2s"}, 
+        {"id": 30, "source": 1003, "target": 1004, "type": "e2s"}, 
+        {"id": 40, "source": 1004, "target": 1005, "type": "e2s"}, 
+        {"id": 50, "source": 1005, "target": 1006, "type": "e2s"}, 
+        {"id": 60, "source": 1006, "target": 1007, "type": "e2s"}, 
+        {"id": 70, "source": 1007, "target": 1900, "type": "e2s"}, 
+        {"id": 80, "source": 1900, "target": 200, "type": "e2s"}
     ],
     "scales": [
         {
