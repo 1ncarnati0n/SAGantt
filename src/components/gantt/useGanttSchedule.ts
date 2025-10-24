@@ -2,10 +2,6 @@ import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 
 import type { SaveState, ScheduleData } from "./types";
 
-interface UseGanttScheduleOptions {
-  workTypeColors: Record<string, string>;
-}
-
 interface UseGanttScheduleResult {
   schedule: ScheduleData | null;
   isLoading: boolean;
@@ -24,7 +20,10 @@ interface UseGanttScheduleResult {
   initGantt: (api: any) => void;
 }
 
-const ISO_DATE_RE = /^\d{4}-\d{2}-\d{2}$/;
+const TYPE_COLORS: Record<string, { bar: string; progress: string }> = {
+  taskA: { bar: "#6366f1", progress: "#c7d2fe" },
+  taskB: { bar: "#ec4899", progress: "#fbcfe8" },
+};
 
 const toIsoDate = (value: unknown): string | undefined => {
   if (!value) {
@@ -32,19 +31,12 @@ const toIsoDate = (value: unknown): string | undefined => {
   }
 
   if (typeof value === "string") {
-    if (ISO_DATE_RE.test(value)) {
-      return value;
-    }
-
     const parsed = new Date(value);
-    if (!Number.isNaN(parsed.getTime())) {
-      return parsed.toISOString().split("T")[0];
-    }
-    return undefined;
+    return Number.isNaN(parsed.getTime()) ? undefined : parsed.toISOString().split("T")[0];
   }
 
   if (value instanceof Date) {
-    return value.toISOString().split("T")[0];
+    return Number.isNaN(value.getTime()) ? undefined : value.toISOString().split("T")[0];
   }
 
   return undefined;
@@ -170,31 +162,48 @@ const serializeSchedule = (
   })),
 });
 
-const transformTaskForDisplay = (
-  task: any,
-  workTypeColors: Record<string, string>,
-): Record<string, unknown> => {
-  const baseTask = {
-    ...task,
-    start: new Date(task.start),
-    ...(task.end ? { end: new Date(task.end) } : {}),
-    ...(task.base_start ? { base_start: new Date(task.base_start) } : {}),
-    ...(task.base_end ? { base_end: new Date(task.base_end) } : {}),
-  };
-
-  if (task.workType && workTypeColors[task.workType as string]) {
-    baseTask.color = workTypeColors[task.workType as string];
+const toDateOrUndefined = (value: unknown): Date | undefined => {
+  if (!value) {
+    return undefined;
   }
 
-  return baseTask;
+  if (value instanceof Date) {
+    return Number.isNaN(value.getTime()) ? undefined : value;
+  }
+
+  const next = new Date(value);
+  return Number.isNaN(next.getTime()) ? undefined : next;
 };
 
-export const useGanttSchedule = (options: UseGanttScheduleOptions): UseGanttScheduleResult => {
-  const { workTypeColors } = options;
+const decorateTask = (task: Record<string, unknown>): Record<string, unknown> => {
+  const decorated: Record<string, unknown> = { ...task };
 
+  const start = toDateOrUndefined(decorated.start);
+  if (start) decorated.start = start;
+
+  const end = toDateOrUndefined(decorated.end);
+  if (end) decorated.end = end;
+
+  const baseStart = toDateOrUndefined(decorated.base_start);
+  if (baseStart) decorated.base_start = baseStart;
+
+  const baseEnd = toDateOrUndefined(decorated.base_end);
+  if (baseEnd) decorated.base_end = baseEnd;
+
+  const typeKey = typeof decorated.type === "string" ? decorated.type : "";
+  const palette = TYPE_COLORS[typeKey];
+  if (palette) {
+    decorated.color = palette.bar;
+    decorated.progressColor = palette.progress;
+  }
+
+  return decorated;
+};
+
+export const useGanttSchedule = (): UseGanttScheduleResult => {
   const apiRef = useRef<any>(null);
-  const currentTasksRef = useRef<any[]>([]);
-  const currentLinksRef = useRef<any[]>([]);
+  const currentTasksRef = useRef<Array<Record<string, unknown>>>([]);
+  const currentLinksRef = useRef<Array<Record<string, unknown>>>([]);
 
   const [schedule, setSchedule] = useState<ScheduleData | null>(null);
   const [isLoading, setIsLoading] = useState<boolean>(true);
@@ -204,6 +213,18 @@ export const useGanttSchedule = (options: UseGanttScheduleOptions): UseGanttSche
   const markAsChanged = useCallback(() => {
     setHasChanges(true);
     setSaveState((prev) => (prev === "saved" ? "idle" : prev));
+  }, []);
+
+  const updateScheduleState = useCallback(() => {
+    setSchedule((prev) =>
+      prev
+        ? {
+            ...prev,
+            tasks: currentTasksRef.current.map((task) => ({ ...task })),
+            links: currentLinksRef.current.map((link) => ({ ...link })),
+          }
+        : prev,
+    );
   }, []);
 
   const getTaskFromApi = useCallback((taskId: unknown): Record<string, unknown> | null => {
@@ -242,12 +263,16 @@ export const useGanttSchedule = (options: UseGanttScheduleOptions): UseGanttSche
         return;
       }
 
+      const decorated = decorateTask(source);
+
       if (index === -1) {
-        currentTasksRef.current.push(source);
+        currentTasksRef.current = [...currentTasksRef.current, decorated];
         return;
       }
 
-      currentTasksRef.current[index] = { ...currentTasksRef.current[index], ...source };
+      const nextTasks = [...currentTasksRef.current];
+      nextTasks[index] = { ...nextTasks[index], ...decorated };
+      currentTasksRef.current = nextTasks;
     },
     [getTaskFromApi],
   );
@@ -298,32 +323,18 @@ export const useGanttSchedule = (options: UseGanttScheduleOptions): UseGanttSche
     (event: any) => {
       updateTaskInRef(event);
       markAsChanged();
+      updateScheduleState();
     },
-    [markAsChanged, updateTaskInRef],
+    [markAsChanged, updateScheduleState, updateTaskInRef],
   );
 
   const handleTaskAdd = useCallback(
     (event: any) => {
-      const normalizedTask = toPlainTask(event) ?? getTaskFromApi(event?.id);
-
-      if (!normalizedTask || normalizedTask.id === undefined || normalizedTask.id === null) {
-        console.warn("Cannot append task without id:", event);
-        return;
-      }
-
-      const existingIndex = currentTasksRef.current.findIndex((task) => idsAreEqual(task.id, normalizedTask.id));
-      if (existingIndex === -1) {
-        currentTasksRef.current.push(normalizedTask);
-      } else {
-        currentTasksRef.current[existingIndex] = {
-          ...currentTasksRef.current[existingIndex],
-          ...normalizedTask,
-        };
-      }
-
+      updateTaskInRef(event);
       markAsChanged();
+      updateScheduleState();
     },
-    [getTaskFromApi, markAsChanged],
+    [markAsChanged, updateScheduleState, updateTaskInRef],
   );
 
   const handleTaskDelete = useCallback(
@@ -337,16 +348,18 @@ export const useGanttSchedule = (options: UseGanttScheduleOptions): UseGanttSche
 
       currentTasksRef.current = currentTasksRef.current.filter((t) => !idsAreEqual(t.id, targetId));
       markAsChanged();
+      updateScheduleState();
     },
-    [markAsChanged],
+    [markAsChanged, updateScheduleState],
   );
 
   const handleTaskMove = useCallback(
     (event: any) => {
       updateTaskInRef(event);
       markAsChanged();
+      updateScheduleState();
     },
-    [markAsChanged, updateTaskInRef],
+    [markAsChanged, updateScheduleState, updateTaskInRef],
   );
 
   const handleLinkAdd = useCallback(
@@ -360,17 +373,20 @@ export const useGanttSchedule = (options: UseGanttScheduleOptions): UseGanttSche
 
       const existingIndex = currentLinksRef.current.findIndex((link) => idsAreEqual(link.id, normalizedLink.id));
       if (existingIndex === -1) {
-        currentLinksRef.current.push(normalizedLink);
+        currentLinksRef.current = [...currentLinksRef.current, normalizedLink];
       } else {
-        currentLinksRef.current[existingIndex] = {
-          ...currentLinksRef.current[existingIndex],
+        const nextLinks = [...currentLinksRef.current];
+        nextLinks[existingIndex] = {
+          ...nextLinks[existingIndex],
           ...normalizedLink,
         };
+        currentLinksRef.current = nextLinks;
       }
 
       markAsChanged();
+      updateScheduleState();
     },
-    [markAsChanged],
+    [markAsChanged, updateScheduleState],
   );
 
   const handleLinkUpdate = useCallback(
@@ -392,11 +408,14 @@ export const useGanttSchedule = (options: UseGanttScheduleOptions): UseGanttSche
           console.warn("Cannot resolve link payload for update:", event);
           return;
         }
-        currentLinksRef.current[index] = { ...currentLinksRef.current[index], ...normalizedLink };
+        const nextLinks = [...currentLinksRef.current];
+        nextLinks[index] = { ...nextLinks[index], ...normalizedLink };
+        currentLinksRef.current = nextLinks;
       }
       markAsChanged();
+      updateScheduleState();
     },
-    [markAsChanged],
+    [markAsChanged, updateScheduleState],
   );
 
   const handleLinkDelete = useCallback(
@@ -410,8 +429,9 @@ export const useGanttSchedule = (options: UseGanttScheduleOptions): UseGanttSche
 
       currentLinksRef.current = currentLinksRef.current.filter((l) => !idsAreEqual(l.id, targetId));
       markAsChanged();
+      updateScheduleState();
     },
-    [markAsChanged],
+    [markAsChanged, updateScheduleState],
   );
 
   const handlers = useMemo(
@@ -424,15 +444,7 @@ export const useGanttSchedule = (options: UseGanttScheduleOptions): UseGanttSche
       onUpdateLink: handleLinkUpdate,
       onDeleteLink: handleLinkDelete,
     }),
-    [
-      handleLinkAdd,
-      handleLinkDelete,
-      handleLinkUpdate,
-      handleTaskAdd,
-      handleTaskDelete,
-      handleTaskMove,
-      handleTaskUpdate,
-    ],
+    [handleLinkAdd, handleLinkDelete, handleLinkUpdate, handleTaskAdd, handleTaskDelete, handleTaskMove, handleTaskUpdate],
   );
 
   const initGantt = useCallback((api: any) => {
@@ -447,9 +459,7 @@ export const useGanttSchedule = (options: UseGanttScheduleOptions): UseGanttSche
         if (response.ok) {
           const data = await response.json();
 
-          const processedTasks = (data.tasks || []).map((task: any) =>
-            transformTaskForDisplay(task, workTypeColors),
-          );
+          const processedTasks = (data.tasks || []).map((task: any) => decorateTask(task));
 
           const nextSchedule: ScheduleData = {
             tasks: processedTasks,
@@ -469,7 +479,7 @@ export const useGanttSchedule = (options: UseGanttScheduleOptions): UseGanttSche
     };
 
     loadData();
-  }, [workTypeColors]);
+  }, []);
 
   return {
     schedule,

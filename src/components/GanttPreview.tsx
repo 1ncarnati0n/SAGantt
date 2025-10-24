@@ -1,32 +1,15 @@
-import React, { useMemo, useState } from "react";
+import React, { useCallback, useMemo, useState } from "react";
 
 import { Gantt, Willow, defaultColumns } from "wx-react-gantt";
 
 import "../styles/ganttTheme.css";
 import { GanttControls } from "./gantt/GanttControls";
 import { useGanttSchedule } from "./gantt/useGanttSchedule";
+import { editorShape } from "./gantt/editorShape";
+import { CELL_HEIGHT, CELL_WIDTH_MAP, TASK_TYPES } from "./gantt/taskConfig";
 import type { ViewType } from "./gantt/types";
 
 const START_COLUMN_WIDTH = 100;
-
-const CELL_WIDTH_MAP: Record<ViewType, number> = {
-  day: 28,
-  week: 120,
-  month: 180,
-};
-
-const CELL_HEIGHT = 36;
-
-const TASK_TYPES = [
-  { id: "task", label: "Task" },
-  { id: "summary", label: "Summary task" },
-  { id: "milestone", label: "Milestone" },
-];
-
-const WORK_TYPE_COLORS: Record<string, string> = {
-  direct: "#4CAF50",
-  indirect: "#2196F3",
-};
 
 interface ScaleConfig {
   unit: "year" | "month" | "day" | "hour" | "week";
@@ -64,11 +47,9 @@ const TIME_SCALE_CONFIGS: Record<ViewType, TimeScaleConfig> = {
 
 export const GanttPreview: React.FC = () => {
   const [viewType, setViewType] = useState<ViewType>("day");
-  const [showBaselines, setShowBaselines] = useState<boolean>(true);
+  const [showBaselines, setShowBaselines] = useState<boolean>(false);
 
-  const { schedule, isLoading, saveState, hasChanges, handleSave, handlers, initGantt } = useGanttSchedule({
-    workTypeColors: WORK_TYPE_COLORS,
-  });
+  const { schedule, isLoading, saveState, hasChanges, handleSave, handlers, initGantt } = useGanttSchedule();
 
   const columns = useMemo(() => {
     return defaultColumns.map((column) => {
@@ -132,6 +113,7 @@ export const GanttPreview: React.FC = () => {
               cellWidth={CELL_WIDTH_MAP[viewType]}
               cellHeight={CELL_HEIGHT}
               baselines={showBaselines}
+              editorShape={editorShape}
               {...handlers}
             />
           </Willow>

@@ -1,5 +1,12 @@
 @import "wx-react-gantt/dist/gantt.css";
 
+:root {
+    --task-a-color: #6366f1;
+    --task-a-progress: #c7d2fe;
+    --task-b-color: #ec4899;
+    --task-b-progress: #fbcfe8;
+}
+
 .wx-baseline.x2-1qryx5p.x2-1qryx5p {
     position: absolute;
     background-color: #292929;
@@ -115,4 +122,25 @@
 
 	/* sidebar */
 	--wx-sidebar-close-icon: #c0c3ce;
+}
+
+/* Custom task colors */
+.wx-gantt .wx-bar.wx-task.taskA {
+    background-color: var(--task-a-color);
+    border: 1px solid var(--task-a-color);
+    color: #ffffff;
+}
+
+.wx-gantt .wx-bar.wx-task.taskA .wx-progress-percent {
+    background-color: var(--task-a-progress);
+}
+
+.wx-gantt .wx-bar.wx-task.taskB {
+    background-color: var(--task-b-color);
+    border: 1px solid var(--task-b-color);
+    color: #ffffff;
+}
+
+.wx-gantt .wx-bar.wx-task.taskB .wx-progress-percent {
+    background-color: var(--task-b-progress);
 }

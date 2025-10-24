@@ -1,227 +1,420 @@
 {
     "tasks": [
         {
-            "id": 10,
-            "text": "골조공정(C.P)",
+            "id": "temp://1761288337819",
+            "text": "골조공사 ",
             "type": "summary",
-            "start": "2025-05-06",
-            "end": "2025-06-10",
-            "base_start": "2025-05-07",
-            "base_end": "2025-06-14",
-            "duration": 35,
-            "progress": 30,
-            "parent": 0,
-            "lazy": false,
-            "category": "주공정",
-            "open": true
-        },
-        {
-            "id": 100,
-            "text": "지하골조(벽체+슬라브)",
-            "type": "summary",
-            "start": "2025-05-20",
-            "end": "2025-06-10",
-            "base_start": "2025-05-22",
-            "base_end": "2025-05-12",
-            "duration": 21,
+            "start": "2025-10-24",
+            "end": "2025-12-01",
+            "duration": 38,
             "progress": 0,
-            "parent": 10,
-            "category": "지하골조",
+            "parent": 0,
             "open": true
         },
         {
-            "id": 200,
-            "text": "지하골조(벽체1단)",
+            "id": "temp://1761288337820",
+            "text": "지하골조(벽체+슬래브)",
             "type": "summary",
-            "start": "2025-05-06",
-            "end": "2025-05-19",
-            "duration": 13,
-            "progress": 79,
-            "parent": 10,
-            "category": "지하골조",
+            "start": "2025-10-24",
+            "end": "2025-11-12",
+            "duration": 19,
+            "progress": 0,
+            "parent": "temp://1761288337819",
             "open": true
         },
         {
-            "id": 2001,
-            "text": "철근 현장조립",
-            "type": "task",
-            "start": "2025-05-06",
-            "end": "2025-05-11",
-            "duration": 5,
-            "progress": 100,
-            "parent": 200,
-            "lazy": false,
-            "category": "벽체",
-            "workType": "direct"
-        },
-        {
-            "id": 2002,
-            "text": "벽체1단 유로폼 설치",
-            "type": "task",
-            "start": "2025-05-07",
-            "end": "2025-05-13",
-            "duration": 6,
-            "progress": 100,
-            "parent": 200,
-            "lazy": false,
-            "category": "벽체",
-            "workType": "direct"
-        },
-        {
-            "id": "temp://1761270748799",
+            "id": "temp://1761288337821",
             "text": "벽체(유로폼)",
             "type": "summary",
-            "start": "2025-05-20",
-            "end": "2025-05-29",
-            "duration": 10,
+            "start": "2025-10-24",
+            "end": "2025-11-05",
+            "duration": 12,
             "progress": 0,
-            "parent": 100,
+            "parent": "temp://1761288337820",
             "open": true
         },
         {
-            "id": "temp://1761270748800",
+            "id": "temp://1761288337822",
             "text": "철근 현장조립",
-            "type": "task",
-            "start": "2025-05-20",
-            "end": "2025-05-24",
-            "duration": 5,
+            "type": "taskB",
+            "start": "2025-10-24",
+            "end": "2025-10-27",
+            "duration": 3,
             "progress": 0,
-            "parent": "temp://1761270748799"
-        },
-        {
-            "id": "temp://1761270748801",
-            "text": "유로폼 설치",
-            "type": "task",
-            "start": "2025-05-24",
-            "end": "2025-05-29",
-            "duration": 6,
-            "progress": 0,
-            "parent": "temp://1761270748799"
-        },
-        {
-            "id": "temp://1761270748803",
-            "text": "슬래브(합판거푸집)",
-            "type": "summary",
-            "start": "2025-05-27",
-            "end": "2025-06-10",
-            "duration": 14,
-            "progress": 0,
-            "parent": 100,
+            "parent": "temp://1761288337821",
             "open": true
         },
         {
-            "id": "temp://1761270748804",
-            "text": "강관동바리 설치&해체",
-            "type": "task",
-            "start": "2025-05-27",
-            "end": "2025-05-31",
+            "id": "temp://1761288526973",
+            "text": "유로폼 설치",
+            "type": "taskB",
+            "start": "2025-10-28",
+            "end": "2025-11-02",
             "duration": 5,
             "progress": 0,
-            "parent": "temp://1761270748803"
+            "parent": "temp://1761288337821",
+            "open": true
         },
         {
-            "id": "temp://1761270748809",
+            "id": "temp://1761288526975",
+            "text": "강관동바리 설치&해체",
+            "type": "taskA",
+            "start": "2025-10-30",
+            "end": "2025-11-03",
+            "duration": 4,
+            "progress": 0,
+            "parent": "temp://1761288526974",
+            "open": true
+        },
+        {
+            "id": "temp://1761288526976",
             "text": "합판거푸집 설치",
             "type": "task",
-            "start": "2025-05-30",
-            "end": "2025-06-02",
-            "duration": 4,
+            "start": "2025-11-02",
+            "end": "2025-11-05",
+            "duration": 3,
             "progress": 0,
-            "parent": "temp://1761270748803"
+            "parent": "temp://1761288526974",
+            "open": true
         },
         {
-            "id": "temp://1761270748810",
+            "id": "temp://1761288759914",
+            "text": "지하골조(벽체1단)",
+            "type": "summary",
+            "start": "2025-11-17",
+            "end": "2025-12-01",
+            "duration": 14,
+            "progress": 0,
+            "parent": "temp://1761288337819",
+            "open": true
+        },
+        {
+            "id": "temp://1761288759915",
             "text": "철근 현장조립",
-            "type": "task",
-            "start": "2025-06-01",
-            "end": "2025-06-05",
+            "type": "taskB",
+            "start": "2025-11-17",
+            "end": "2025-11-22",
             "duration": 5,
             "progress": 0,
-            "parent": "temp://1761270748803"
+            "parent": "temp://1761288759914"
         },
         {
-            "id": "temp://1761270748811",
-            "text": "콘크리트 펌프차 타설",
-            "type": "task",
-            "start": "2025-06-06",
-            "end": "2025-06-10",
-            "duration": 4,
+            "id": "temp://1761289036048",
+            "text": "유로폼 설치",
+            "type": "taskB",
+            "start": "2025-11-18",
+            "end": "2025-11-25",
+            "duration": 7,
             "progress": 0,
-            "parent": "temp://1761270748803"
+            "parent": "temp://1761288759914"
         },
         {
-            "id": "temp://1761270748812",
+            "id": "temp://1761289036049",
             "text": "콘크리트 펌프차 타설",
-            "type": "task",
-            "start": "2025-05-15",
-            "end": "2025-05-19",
-            "duration": 4,
-            "progress": 44,
-            "parent": 200
+            "type": "taskB",
+            "start": "2025-11-25",
+            "end": "2025-11-26",
+            "duration": 1,
+            "progress": 0,
+            "parent": "temp://1761288759914",
+            "open": true
         },
         {
-            "id": "temp://1761270748813",
-            "text": "보강&검측",
+            "id": "temp://1761289110550",
+            "text": "현장 조립",
+            "type": "task",
+            "start": "2025-10-28",
+            "end": "2025-10-30",
+            "duration": 2,
+            "progress": 0,
+            "parent": "temp://1761288337822"
+        },
+        {
+            "id": "temp://1761289110553",
+            "text": "검측",
             "type": "milestone",
-            "start": "2025-05-14",
+            "start": "2025-10-31",
+            "end": "2025-10-24",
             "duration": 0,
             "progress": 0,
-            "parent": 2002
+            "parent": "temp://1761288337822"
+        },
+        {
+            "id": "temp://1761289110554",
+            "text": "보강",
+            "type": "taskA",
+            "start": "2025-11-03",
+            "end": "2025-11-04",
+            "duration": 1,
+            "progress": 0,
+            "parent": "temp://1761288526973"
+        },
+        {
+            "id": "temp://1761289110555",
+            "text": "검측",
+            "type": "milestone",
+            "start": "2025-11-05",
+            "duration": 0,
+            "progress": 0,
+            "parent": "temp://1761288526973"
+        },
+        {
+            "id": "temp://1761290537312",
+            "text": "검측",
+            "type": "milestone",
+            "start": "2025-11-04",
+            "end": "2025-10-31",
+            "duration": 0,
+            "progress": 0,
+            "parent": "temp://1761288526975"
+        },
+        {
+            "id": "temp://1761290537313",
+            "text": "보강",
+            "type": "task",
+            "start": "2025-11-06",
+            "end": "2025-11-07",
+            "duration": 1,
+            "progress": 0,
+            "parent": "temp://1761288526976"
+        },
+        {
+            "id": "temp://1761290537318",
+            "text": "준비작업",
+            "type": "task",
+            "start": "2025-11-03",
+            "end": "2025-11-05",
+            "duration": 2,
+            "progress": 0,
+            "parent": "temp://1761288759912"
+        },
+        {
+            "id": "temp://1761290537323",
+            "text": "검측",
+            "type": "milestone",
+            "start": "2025-11-12",
+            "end": "2025-11-07",
+            "duration": 0,
+            "progress": 0,
+            "parent": "temp://1761288759912"
+        },
+        {
+            "id": "temp://1761290537328",
+            "text": "콘크리트 양생",
+            "type": "task",
+            "start": "2025-11-14",
+            "end": "2025-11-18",
+            "duration": 4,
+            "progress": 0,
+            "parent": "temp://1761288759913",
+            "open": true
+        },
+        {
+            "id": "temp://1761291696897",
+            "text": "검측",
+            "type": "milestone",
+            "start": "2025-11-19",
+            "end": "2025-11-15",
+            "duration": 0,
+            "progress": 0,
+            "parent": "temp://1761290537328"
+        },
+        {
+            "id": "temp://1761292641814",
+            "text": "슬래브(합판 거푸집)",
+            "type": "summary",
+            "start": "2025-10-31",
+            "end": "2025-11-12",
+            "duration": 12,
+            "progress": 0,
+            "parent": "temp://1761288337820",
+            "open": true
+        },
+        {
+            "id": "temp://1761292641815",
+            "text": "강관통바리 설치&해체",
+            "type": "task",
+            "start": "2025-10-31",
+            "end": "2025-11-04",
+            "duration": 4,
+            "progress": 0,
+            "parent": "temp://1761292641814"
+        },
+        {
+            "id": "temp://1761292641816",
+            "text": "합판거푸집 설치",
+            "type": "taskB",
+            "start": "2025-11-03",
+            "end": "2025-11-05",
+            "duration": 2,
+            "progress": 0,
+            "parent": "temp://1761292641814"
+        },
+        {
+            "id": "temp://1761292641819",
+            "text": "철근현장조립",
+            "type": "taskB",
+            "start": "2025-11-06",
+            "end": "2025-11-10",
+            "duration": 4,
+            "progress": 0,
+            "parent": "temp://1761292641814"
+        },
+        {
+            "id": "temp://1761292641820",
+            "text": "철근 현장조립",
+            "type": "taskA",
+            "start": "2025-11-04",
+            "end": "2025-11-05",
+            "duration": 1,
+            "progress": 0,
+            "parent": "temp://1761292641819"
+        },
+        {
+            "id": "temp://1761292641821",
+            "text": "보강",
+            "type": "taskA",
+            "start": "2025-11-06",
+            "end": "2025-11-07",
+            "duration": 1,
+            "progress": 0,
+            "parent": "temp://1761292641816"
+        },
+        {
+            "id": "temp://1761292929950",
+            "text": "검측",
+            "type": "milestone",
+            "start": "2025-11-11",
+            "end": "2025-11-06",
+            "duration": 0,
+            "progress": 0,
+            "parent": "temp://1761292641819"
+        },
+        {
+            "id": "temp://1761292929953",
+            "text": "콘크리트 펌프차 타설",
+            "type": "taskB",
+            "start": "2025-11-11",
+            "end": "2025-11-12",
+            "duration": 1,
+            "progress": 0,
+            "parent": "temp://1761292641814",
+            "open": true
+        },
+        {
+            "id": "temp://1761293215162",
+            "text": "양생",
+            "type": "taskA",
+            "start": "2025-11-13",
+            "end": "2025-11-16",
+            "duration": 3,
+            "progress": 0,
+            "parent": "temp://1761292929953"
+        },
+        {
+            "id": "temp://1761293215163",
+            "text": "검측",
+            "type": "milestone",
+            "start": "2025-11-17",
+            "end": "2025-11-11",
+            "duration": 0,
+            "progress": 0,
+            "parent": "temp://1761292929953"
+        },
+        {
+            "id": "temp://1761293609682",
+            "text": "양생",
+            "type": "taskA",
+            "start": "2025-11-27",
+            "end": "2025-12-01",
+            "duration": 4,
+            "progress": 0,
+            "parent": "temp://1761289036049"
         }
     ],
     "links": [
         {
-            "id": 10,
-            "source": 1001,
-            "target": 1002,
+            "id": "temp://1761289110551",
+            "source": "temp://1761288337822",
+            "target": "temp://1761288526973",
             "type": "e2s"
         },
         {
-            "id": 20,
-            "source": 1002,
-            "target": 1003,
+            "id": "temp://1761289110556",
+            "source": "temp://1761288526973",
+            "target": "temp://1761289110555",
             "type": "e2s"
         },
         {
-            "id": 30,
-            "source": 1003,
-            "target": 1004,
+            "id": "temp://1761289110558",
+            "source": "temp://1761288526973",
+            "target": "temp://1761288526976",
             "type": "e2s"
         },
         {
-            "id": 40,
-            "source": 1004,
-            "target": 1005,
+            "id": "temp://1761290537321",
+            "source": "temp://1761288526976",
+            "target": "temp://1761288759912",
             "type": "e2s"
         },
         {
-            "id": 50,
-            "source": 1005,
-            "target": 1006,
+            "id": "temp://1761290537324",
+            "source": "temp://1761288759912",
+            "target": "temp://1761290537323",
             "type": "e2s"
         },
         {
-            "id": 60,
-            "source": 1006,
-            "target": 1007,
+            "id": "temp://1761290537326",
+            "source": "temp://1761290537323",
+            "target": "temp://1761288759913",
             "type": "e2s"
         },
         {
-            "id": 70,
-            "source": 1007,
-            "target": 1900,
+            "id": "temp://1761290537330",
+            "source": "temp://1761288759913",
+            "target": "temp://1761290537329",
             "type": "e2s"
         },
         {
-            "id": "temp://1761270748814",
-            "source": 2002,
-            "target": "temp://1761270748813",
+            "id": "temp://1761290537334",
+            "source": "temp://1761290537328",
+            "target": "temp://1761290537329",
             "type": "e2s"
         },
         {
-            "id": "temp://1761270748816",
-            "source": "temp://1761270748813",
-            "target": "temp://1761270748812",
+            "id": "temp://1761292641817",
+            "source": "temp://1761288526973",
+            "target": "temp://1761292641816",
+            "type": "e2s"
+        },
+        {
+            "id": "temp://1761292641822",
+            "source": "temp://1761292641816",
+            "target": "temp://1761292641819",
+            "type": "e2s"
+        },
+        {
+            "id": "temp://1761293215168",
+            "source": "temp://1761292929953",
+            "target": "temp://1761293215163",
+            "type": "e2s"
+        },
+        {
+            "id": "temp://1761293215172",
+            "source": "temp://1761292641819",
+            "target": "temp://1761292929950",
+            "type": "e2s"
+        },
+        {
+            "id": "temp://1761293215174",
+            "source": "temp://1761292929950",
+            "target": "temp://1761292929953",
+            "type": "e2s"
+        },
+        {
+            "id": "temp://1761293215176",
+            "source": "temp://1761293215163",
+            "target": "temp://1761288759915",
             "type": "e2s"
         }
     ],
