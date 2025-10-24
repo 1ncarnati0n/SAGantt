@@ -32,20 +32,10 @@ export default defineConfig({
                     }
 
                     if (req.method === "GET") {
-                        console.log("🔵 [API] GET /api/mock - Request received");
-                        console.log("🔵 [API] Reading from:", mockFilePath);
                         void fs
-                            .stat(mockFilePath)
-                            .then((stats) => {
-                                console.log("🔵 [API] File stats before read:", {
-                                    size: stats.size,
-                                    modified: stats.mtime.toISOString()
-                                });
-                                return fs.readFile(mockFilePath, "utf-8");
-                            })
+                            .readFile(mockFilePath, "utf-8")
                             .then((content) => {
-                                console.log("✅ [API] File read successfully, size:", content.length);
-                                console.log("✅ [API] First 100 chars:", content.substring(0, 100));
+                                console.log(`📖 [GET] Loaded ${content.length} bytes`);
                                 res.statusCode = 200;
                                 res.setHeader("Content-Type", "application/json");
                                 res.setHeader("Cache-Control", "no-store, no-cache, must-revalidate");
@@ -68,7 +58,6 @@ export default defineConfig({
                     }
 
                     if (req.method === "POST") {
-                        console.log("🔵 [API] POST /api/mock - Request received");
                         let rawBody = "";
 
                         req.on("data", (chunk) => {
@@ -77,14 +66,7 @@ export default defineConfig({
 
                         req.on("end", () => {
                             try {
-                                console.log("🔵 [API] Received body length:", rawBody.length);
                                 const payload = JSON.parse(rawBody || "{}");
-                                console.log("🔵 [API] Parsed payload:", {
-                                    tasks: payload.tasks?.length || 0,
-                                    links: payload.links?.length || 0,
-                                    scales: payload.scales?.length || 0,
-                                });
-                                console.log("🔵 [API] Writing to:", mockFilePath);
 
                                 void fs
                                     .writeFile(
@@ -93,21 +75,13 @@ export default defineConfig({
                                         "utf-8",
                                     )
                                     .then(() => {
-                                        console.log("✅ [API] File written successfully");
-                                        // 파일이 실제로 변경되었는지 확인
-                                        return fs.stat(mockFilePath);
-                                    })
-                                    .then((stats) => {
-                                        console.log("✅ [API] File stats:", {
-                                            size: stats.size,
-                                            modified: stats.mtime.toISOString()
-                                        });
+                                        console.log(`💾 [POST] Saved ${payload.tasks?.length || 0} tasks, ${payload.links?.length || 0} links`);
                                         res.statusCode = 200;
                                         res.setHeader("Content-Type", "application/json");
                                         res.end(JSON.stringify({ status: "ok" }));
                                     })
                                     .catch((error) => {
-                                        console.error("❌ [API] Write error:", error);
+                                        console.error("❌ [POST] Write error:", (error as Error).message);
                                         res.statusCode = 500;
                                         res.setHeader("Content-Type", "application/json");
                                         res.end(
@@ -118,7 +92,7 @@ export default defineConfig({
                                         );
                                     });
                             } catch (error) {
-                                console.error("❌ [API] Parse error:", error);
+                                console.error("❌ [POST] Parse error:", (error as Error).message);
                                 res.statusCode = 400;
                                 res.setHeader("Content-Type", "application/json");
                                 res.end(

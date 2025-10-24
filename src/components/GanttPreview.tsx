@@ -250,13 +250,10 @@ export const GanttPreview: React.FC = () => {
   useEffect(() => {
     const loadData = async () => {
       try {
-        console.log("Loading saved data from API...");
         const response = await fetch("/api/mock");
 
         if (response.ok) {
           const data = await response.json();
-          console.log("Loaded data:", data);
-          console.log("📊 Tasks count:", data.tasks?.length, "Links count:", data.links?.length);
 
           // 날짜 문자열을 Date 객체로 변환
           const processedTasks = data.tasks.map((task: any) => {
@@ -285,11 +282,6 @@ export const GanttPreview: React.FC = () => {
           // Ref에도 초기 데이터 저장
           currentTasksRef.current = processedTasks;
           currentLinksRef.current = data.links || [];
-
-          console.log("Data loaded successfully");
-          console.log("✅ Ref initialized - Tasks:", currentTasksRef.current.length, "Links:", currentLinksRef.current.length);
-        } else {
-          console.log("Failed to load data");
         }
       } catch (error) {
         console.error("Error loading data:", error);
@@ -302,8 +294,6 @@ export const GanttPreview: React.FC = () => {
   }, []);
 
   const handleSave = useCallback(async () => {
-    console.log("=== Save Button Clicked ===");
-
     if (!import.meta.env.DEV) {
       console.error("Not in development mode");
       return;
@@ -316,10 +306,6 @@ export const GanttPreview: React.FC = () => {
       const tasksToSave = currentTasksRef.current;
       const linksToSave = currentLinksRef.current;
 
-      console.log("Tasks to save:", tasksToSave.length);
-      console.log("Links to save:", linksToSave.length);
-      console.log("Sample task:", tasksToSave[0]);
-
       if (tasksToSave.length === 0) {
         throw new Error("No tasks to save");
       }
@@ -330,7 +316,6 @@ export const GanttPreview: React.FC = () => {
         linksToSave,
         schedule?.scales || []
       );
-      console.log("Serialized payload:", payload);
 
       // 서버에 저장
       const response = await fetch("/api/mock", {
@@ -344,9 +329,6 @@ export const GanttPreview: React.FC = () => {
       if (!response.ok) {
         throw new Error(`Server error: ${response.statusText}`);
       }
-
-      const result = await response.json();
-      console.log("Save successful:", result);
 
       setSaveState("saved");
       setHasChanges(false);
@@ -389,23 +371,19 @@ export const GanttPreview: React.FC = () => {
 
     if (index === -1) {
       currentTasksRef.current.push(source);
-      console.log("✓ Task inserted in ref:", targetId);
       return;
     }
 
     currentTasksRef.current[index] = { ...currentTasksRef.current[index], ...source };
-    console.log("✓ Task updated in ref:", targetId);
   }, [getTaskFromApi]);
 
   // Gantt 이벤트 핸들러들 - ref 업데이트 + 변경 감지
   const handleTaskUpdate = useCallback((event: any) => {
-    console.log("📝 Task updated:", event);
     updateTaskInRef(event);
     markAsChanged();
   }, [markAsChanged, updateTaskInRef]);
 
   const handleTaskAdd = useCallback((event: any) => {
-    console.log("➕ Task added:", event);
     const normalizedTask = toPlainTask(event) ?? getTaskFromApi(event?.id);
 
     if (!normalizedTask || normalizedTask.id === undefined || normalizedTask.id === null) {
@@ -428,7 +406,6 @@ export const GanttPreview: React.FC = () => {
 
   const handleTaskDelete = useCallback((event: any) => {
     const targetId = event?.id ?? event?.task?.id;
-    console.log("🗑️ Task deleted:", targetId);
 
     if (targetId === undefined || targetId === null) {
       console.warn("Cannot delete task without id:", event);
@@ -440,13 +417,11 @@ export const GanttPreview: React.FC = () => {
   }, [markAsChanged]);
 
   const handleTaskMove = useCallback((event: any) => {
-    console.log("🔄 Task moved:", event);
     updateTaskInRef(event);
     markAsChanged();
   }, [markAsChanged, updateTaskInRef]);
 
   const handleLinkAdd = useCallback((event: any) => {
-    console.log("🔗 Link added:", event);
     const normalizedLink = toPlainLink(event);
 
     if (!normalizedLink || normalizedLink.id === undefined || normalizedLink.id === null) {
@@ -468,7 +443,6 @@ export const GanttPreview: React.FC = () => {
   }, [markAsChanged]);
 
   const handleLinkUpdate = useCallback((event: any) => {
-    console.log("🔗 Link updated:", event);
     const normalizedLink = toPlainLink(event);
     const targetId =
       normalizedLink?.id ??
@@ -493,7 +467,6 @@ export const GanttPreview: React.FC = () => {
 
   const handleLinkDelete = useCallback((event: any) => {
     const targetId = event?.id ?? event?.link?.id;
-    console.log("🔗 Link deleted:", targetId);
 
     if (targetId === undefined || targetId === null) {
       console.warn("Cannot delete link without id:", event);
