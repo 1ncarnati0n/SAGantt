@@ -96,7 +96,7 @@ h2 {
 }
 
 .gantt-wrapper {
-    height: 46rem;
+    height: clamp(24rem, calc(100vh - 12rem), 64rem);
     border: 1px solid black;
     overflow: hidden;
     box-shadow: 5px 5px 1px rgba(27, 27, 27, 0.842);
