@@ -28,11 +28,11 @@
 	--wx-gantt-summary-border-color: #000000;
 	--wx-gantt-summary-border: 1px solid #000000;
 
-	--wx-gantt-task-color: #3983eb;
+	--wx-gantt-task-color: #539cfa;
 	--wx-gantt-task-font-color: #fff;
 	--wx-gantt-task-fill-color: #1f6bd9;
 	--wx-gantt-task-border-color: #1f6bd9;
-	--wx-gantt-task-border: 1px solid transparent;
+	--wx-gantt-task-border: 1px solid black;
 
 	--wx-gantt-project-color: #91ffe9;
 	--wx-gantt-project-font-color: #ffffff;

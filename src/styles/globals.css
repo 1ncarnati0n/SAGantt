@@ -1,14 +1,80 @@
+@custom-variant dark (&:is(.dark *));
+
 :root {
-    font-family: "Inter", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-    line-height: 1.5;
-    color: #1f2933;
-    background-color: #f8fafc;
+    /* Typography */
+    --font-size: 16px;
+    --font-family: "Inter", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    --font-weight-medium: 500;
+    --font-weight-normal: 400;
+    --font-weight-bold: 700;
+
+    /* Colors - Light Theme */
+    --background: #f8fafc;
+    --foreground: #1f2933;
+    --border: rgba(0, 0, 0, 0.1);
+
+    /* Button Colors */
+    --btn-primary: #3b82f6;
+    --btn-primary-hover: #2563eb;
+    --btn-primary-foreground: #ffffff;
+
+    --btn-success: #ffffff;
+    --btn-success-hover: #059669;
+    --btn-success-foreground: #ffffff;
+
+    --btn-accent: #8b5cf6;
+    --btn-accent-hover: #7c3aed;
+    --btn-accent-foreground: #ffffff;
+
+    --btn-muted: #d1d5db;
+    --btn-muted-hover: #9ca3af;
+    --btn-muted-foreground: #1f2937;
+
+    --btn-disabled: #9ca3af;
+    --btn-disabled-foreground: #d1d5db;
+
+    /* Spacing */
+    --spacing-xs: 0.25rem;
+    --spacing-sm: 0.5rem;
+    --spacing-md: 1rem;
+    --spacing-lg: 1.5rem;
+
+    /* Border Radius */
+    --radius: 0.375rem;
+    --radius-sm: 0.25rem;
+    --radius-md: 0.5rem;
+    --radius-lg: 0.75rem;
+
+    /* Transitions */
+    --transition-fast: 0.15s ease;
+    --transition-normal: 0.2s ease;
+}
+
+.dark {
+    --background: #0f172a;
+    --foreground: #f1f5f9;
+    --border: rgba(255, 255, 255, 0.1);
+
+    --btn-primary: #3b82f6;
+    --btn-primary-hover: #60a5fa;
+
+    --btn-muted: #334155;
+    --btn-muted-hover: #475569;
+    --btn-muted-foreground: #e2e8f0;
+}
+
+html {
+    font-size: var(--font-size);
 }
 
 body,
 html {
     margin: 0;
     height: 100%;
+    font-family: var(--font-family);
+    line-height: 1.5;
+    color: var(--foreground);
+    background-color: var(--background);
 }
 
 #root {
@@ -22,6 +88,11 @@ main {
 h1 {
     margin: 0 0 1.5rem;
     font-size: 1.85rem;
+    font-weight: var(--font-weight-medium);
+}
+
+h2 {
+    font-weight: var(--font-weight-medium);
 }
 
 .gantt-wrapper {
@@ -29,4 +100,72 @@ h1 {
     border: 1px solid black;
     overflow: hidden;
     box-shadow: 5px 5px 1px rgba(27, 27, 27, 0.842);
+}
+
+/* ========== Button Components ========== */
+
+@layer base {
+    .btn {
+        padding: var(--spacing-sm) var(--spacing-md);
+        border: 1px solid black;
+        border-radius: var(none);
+        cursor: pointer;
+        font-size: 1rem;
+        font-weight: var(--font-weight-medium);
+        transition: all var(--transition-normal);
+        line-height: 1.5;
+    }
+
+    .btn:disabled {
+        cursor: not-allowed;
+        opacity: 0.6;
+        background-color: var(--btn-disabled);
+        color: var(--btn-disabled-foreground);
+    }
+
+    /* View Type 버튼 (일/주/월) */
+    .btn-view {
+        background-color: var(--btn-muted);
+        color: var(--btn-muted-foreground);
+        font-weight: var(--font-weight-normal);
+    }
+
+    .btn-view.active {
+        background-color: var(--btn-success);
+        color: ;
+        font-weight: var(--font-weight-bold);
+    }
+
+    .btn-view:hover:not(.active) {
+        background-color: var(--btn-muted-hover);
+    }
+
+    /* Baseline 토글 버튼 */
+    .btn-toggle {
+        background-color: var(--btn-muted);
+        color: var(--btn-muted-foreground);
+        font-weight: var(--font-weight-normal);
+    }
+
+    .btn-toggle.active {
+        background-color: var(--btn-accent);
+        color: var(--btn-accent-foreground);
+        font-weight: var(--font-weight-bold);
+    }
+
+    .btn-toggle:hover:not(.active) {
+        background-color: var(--btn-muted-hover);
+    }
+
+    /* 저장 버튼 */
+    .btn-save {
+        background-color: var(--btn-primary);
+        color: var(--btn-primary-foreground);
+        font-weight: var(--font-weight-bold);
+        margin-left: var(--spacing-sm);
+    }
+
+    .btn-save:hover:not(:disabled) {
+        background-color: var(--btn-primary-hover);
+    }
 }

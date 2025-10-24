@@ -517,53 +517,33 @@ export const GanttPreview: React.FC = () => {
       <div className="mb-5 p-4 bg-gray-100 rounded">
         <button
           onClick={() => handleViewTypeChange("day")}
-          className={`px-4 py-2 mr-2 rounded border-none cursor-pointer ${
-            viewType === "day"
-              ? "bg-green-500 text-white font-bold"
-              : "bg-gray-300 text-black font-normal"
-          }`}
+          className={`btn btn-view ${viewType === "day" ? "active" : ""}`}
         >
           일
         </button>
         <button
           onClick={() => handleViewTypeChange("week")}
-          className={`px-4 py-2 mr-2 rounded border-none cursor-pointer ${
-            viewType === "week"
-              ? "bg-green-500 text-white font-bold"
-              : "bg-gray-300 text-black font-normal"
-          }`}
+          className={`btn btn-view ${viewType === "week" ? "active" : ""}`}
         >
           주
         </button>
         <button
           onClick={() => handleViewTypeChange("month")}
-          className={`px-4 py-2 rounded border-none cursor-pointer ${
-            viewType === "month"
-              ? "bg-green-500 text-white font-bold"
-              : "bg-gray-300 text-black font-normal"
-          }`}
+          className={`btn btn-view ${viewType === "month" ? "active" : ""}`}
         >
           월
         </button>
         <button
           onClick={() => setShowBaselines((prev) => !prev)}
-          className={`px-4 py-2 rounded border-none cursor-pointer ${
-            showBaselines
-              ? "bg-purple-500 text-white font-bold"
-              : "bg-gray-300 text-black font-normal"
-          }`}
+          className={`btn btn-toggle ${showBaselines ? "active" : ""}`}
           aria-pressed={showBaselines}
         >
-          기준 일정 {showBaselines ? "숨기기" : "표시"}
+          계획 일정 {showBaselines ? "숨기기" : "표시"}
         </button>
         <button
           onClick={handleSave}
           disabled={!hasChanges || saveState === "saving"}
-          className={`ml-2 px-4 py-2 rounded border-none cursor-pointer ${
-            hasChanges && saveState !== "saving"
-              ? "bg-blue-500 text-white font-bold hover:bg-blue-600"
-              : "bg-gray-400 text-gray-200 font-normal cursor-not-allowed"
-          }`}
+          className="btn btn-save"
           title={`hasChanges: ${hasChanges}, saveState: ${saveState}`}
         >
           {saveState === "saving" ? "저장 중..." : "저장"}
